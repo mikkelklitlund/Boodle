@@ -2,6 +2,35 @@ const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
 
+const https = require('https');
+const express = require('express');
+const path = require('path');
+
+const key = fs.readFileSync('selfsigned.key');
+const cert = fs.readFileSync('selfsigned.crt');
+const options = {
+	key: key,
+	cert: cert
+};
+
+const port = 4000;
+const app = express();
+app.use(express.static('../html'));
+app.get('/',(req,res)=> {
+	res.send('Hello world');
+});
+app.get('/Boodle',(req,res)=> {
+	res.sendFile(path.join(__dirname,'../html/BoodleHjemmeside.html'));
+});
+
+
+const server = https.createServer(options,app)
+	.listen(port, ()=> {
+		console.log(`Server Running at https://localhost:${port}`);
+		console.log(__dirname);
+	});
+
+
 // Redirects stdin and out to stdout.log
 // let access = fs.createWriteStream('./stdout.log', { flags: 'a'});
 // process.stdout.write = process.stderr.write = access.write.bind(access);
