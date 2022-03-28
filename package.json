@@ -1,0 +1,25 @@
+{
+  "name": "p2",
+  "version": "1.0.0",
+  "description": "P2 Project",
+  "main": "Coursedata.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikkelklitlund/P2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikkelklitlund/P2/issues"
+  },
+  "homepage": "https://github.com/mikkelklitlund/P2#readme",
+  "dependencies": {
+    "esm": "^3.2.25"
+  },
+  "devDependencies": {}
+}

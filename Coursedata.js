@@ -1,9 +1,13 @@
 "use strict";
 
-import fs from "fs";
+import fs, { symlink } from "fs";
 import fetch from "node-fetch";
+import { createRequire } from "module"; 
+const require = createRequire(import.meta.url);
+const my_json_file = require("./course_data1.json") 
 
-const options =
+
+const options = 
   "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=fea55e838143611e65bdaef0a6c1e2b0&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=41300";
 
 async function fetch_data() {
@@ -19,10 +23,22 @@ async function fetch_data() {
 }
 fetch_data();
 
-function json(){
-    let course_data = fs.readFileSync('course_data1.json');
-    const parsedData = JSON.parse(course_data);
-    console.log(parsedData);
+function reader(){
+  
+  for (let i = 1; i < my_json_file.length; i++){
+      console.log(my_json_file[i].summary);
+  }
 }
+reader()
 
-json()
+
+//async function course_data(){
+  //  let json = fs.readFileSync('course_data1.json');
+    //const parsedData = JSON.parse(json);
+    //console.log(parsedData);
+
+//}
+//course_data();
+
+
+
