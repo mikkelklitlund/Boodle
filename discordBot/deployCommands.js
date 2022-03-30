@@ -1,3 +1,4 @@
+//* Remember to run this file after creating a new slash command
 const fs = require('node:fs');
 // const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
