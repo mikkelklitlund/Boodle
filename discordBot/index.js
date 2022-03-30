@@ -1,5 +1,6 @@
 // Require packages needed
 const fs = require("node:fs");
+require('dotenv').config();
 const { Client, Collection, Intents } = require("discord.js");
 const { token } = require("./config.json");
 const https = require("https");
@@ -48,7 +49,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 // Reads files in events folder with js suffix
 const eventFiles = fs
-  .readdirSync("./events")
+  .readdirSync("../discordBot/events")
   .filter((file) => file.endsWith(".js"));
 // Dynamic import of events
 for (const file of eventFiles) {
@@ -58,11 +59,13 @@ for (const file of eventFiles) {
   } else {
     client.on(event.name, (...args) => event.execute(...args));
   }
+
 }
 // Dynamic import of commands from commands directory
 client.commands = new Collection();
+
 const commandFiles = fs
-  .readdirSync("./commands")
+  .readdirSync("../discordBot/commands")
   .filter((file) => file.endsWith(".js"));
 
 for (const file of commandFiles) {
@@ -91,4 +94,4 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-client.login(token);
+client.login(process.env.BOT_TOKEN);
