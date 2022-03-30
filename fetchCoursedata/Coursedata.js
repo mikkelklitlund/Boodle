@@ -1,9 +1,6 @@
 "use strict";
-
-import fs, { symlink } from "fs";
-import fetch from "node-fetch";
-import { createRequire } from "module"; 
-const require = createRequire(import.meta.url);
+const fs = require('fs');
+const fetch = require('node-fetch');
 const my_json_file = require("./course_data1.json") 
 
 
