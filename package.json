@@ -4,7 +4,10 @@
   "description": "P2 Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --runInBand --detectOpenHandles"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -24,7 +27,11 @@
     "axios": "^0.26.1",
     "discord-api-types": "^0.29.0",
     "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "jest": "^27.5.1",
+    "mongodb-memory-server": "^8.1.4",
+    "mongoose": "^6.2.8",
+    "mongoose-encryption": "^2.1.2"
   },
   "devDependencies": {
     "eslint": "^8.11.0"
