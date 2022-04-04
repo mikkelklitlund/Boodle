@@ -46,6 +46,11 @@ app.post("/", (req, res) => {
   res.send("POST tis test");
   console.log('post');
 });
+
+app.get("/register/:id", (req, res) => {
+  res.send('Discord id: ' + Buffer.from(req.params.id,'base64').toString('utf8'));
+});
+
 /* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
 app.get("/Boodle", (req, res) => {
   res.sendFile(path.join(__dirname, "../html/BoodleHjemmeside.html"));
@@ -114,3 +119,5 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.login(process.env.BOT_TOKEN);
+// console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg== 
+// console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
