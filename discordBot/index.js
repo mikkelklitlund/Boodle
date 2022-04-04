@@ -2,10 +2,13 @@
 const fs = require("node:fs");
 require('dotenv').config();
 const { Client, Collection, Intents } = require("discord.js");
-const { token } = require("./config.json");
 const https = require("https");
 const express = require("express");
 const path = require("path");
+const req = require("express/lib/request");
+const { fileURLToPath } = require("node:url");
+const { request } = require("node:http");
+const { json } = require("express/lib/response");
 // Read key and certificate for HTTPS in testing environment
 // TODO: get valid certificate
 const key = fs.readFileSync("selfsigned.key");
@@ -16,21 +19,37 @@ const options = {
 };
 
 // Arbitrary port, should be changed to 8443 
-const port = 4000;
+const port = 8443;
 // Initialization of Express
 const app = express();
 // For making files accessible in directory
-app.use(express.static("../html"));
+app.use('/public',express.static("../website"));
 
-// Testing
+// Testing  
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.sendFile(path.join(__dirname, "../website/Public_resources/setup/index.html"));
 });
+app.post("/", (req, res) => {
+  let body = '';
+  filePath = __dirname + '/data.txt';
+  req.on('data', data =>{
+    body += data;
+  });
 
-// Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
+  req.on('end',()=>{
+    // body = JSON.parse(body);
+    console.log(body + '\n' +filePath);
+    fs.appendFile(filePath, body, ()=>{
+      res.end();
+    });
+  });
+  res.send("POST tis test");
+  console.log('post');
+});
+/* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
 app.get("/Boodle", (req, res) => {
   res.sendFile(path.join(__dirname, "../html/BoodleHjemmeside.html"));
-});
+}); */
 
 // Creates HTTPS server
 const server = https.createServer(options, app).listen(port, () => {
