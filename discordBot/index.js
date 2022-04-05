@@ -5,10 +5,7 @@ const { Client, Collection, Intents } = require("discord.js");
 const https = require("https");
 const express = require("express");
 const path = require("path");
-const req = require("express/lib/request");
-const { fileURLToPath } = require("node:url");
-const { request } = require("node:http");
-const { json } = require("express/lib/response");
+const { userTag } = require("./commands/createUser");
 // Read key and certificate for HTTPS in testing environment
 // TODO: get valid certificate
 const key = fs.readFileSync("selfsigned.key");
@@ -18,7 +15,7 @@ const options = {
   cert: cert,
 };
 
-// Arbitrary port, should be changed to 8443 
+// Arbitrary port, should be 8443 
 const port = 8443;
 // Initialization of Express
 const app = express();
@@ -48,7 +45,10 @@ app.post("/", (req, res) => {
 });
 
 app.get("/register/:id", (req, res) => {
-  res.send('Discord id: ' + Buffer.from(req.params.id,'base64').toString('utf8'));
+  res.send('Discord id: ' + Buffer.from(req.params.id,'base64').toString('ascii') + `Discord tag: ${userTag}`);
+  // res.sendFile(path.join(__dirname,"../website/Public_resources/setup/index.html"));
+  
+  //TODO: Lav register side.
 });
 
 /* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
