@@ -1,6 +1,6 @@
 // Require packages needed
 const fs = require("node:fs");
-require('dotenv').config();
+require("dotenv").config();
 const { Client, Collection, Intents } = require("discord.js");
 const https = require("https");
 const express = require("express");
@@ -14,40 +14,48 @@ const options = {
   key: key,
   cert: cert,
 };
+let exportTest;
 
-// Arbitrary port, should be 8443 
+// Arbitrary port, should be 8443
 const port = 8443;
 // Initialization of Express
 const app = express();
 // For making files accessible in directory
-app.use('/public',express.static("../website"));
+app.use("/public", express.static("../website"));
 
-// Testing  
+// Testing
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../website/Public_resources/setup/index.html"));
+  res.sendFile(
+    path.join(__dirname, "../website/Public_resources/setup/index.html")
+  );
 });
 app.post("/", (req, res) => {
-  let body = '';
-  filePath = __dirname + '/data.txt';
-  req.on('data', data =>{
+  let body = "";
+  filePath = __dirname + "/data.txt";
+  req.on("data", (data) => {
     body += data;
   });
 
-  req.on('end',()=>{
+  req.on("end", () => {
     // body = JSON.parse(body);
-    console.log(body + '\n' +filePath);
-    fs.appendFile(filePath, body, ()=>{
+    console.log(body + "\n" + filePath);
+    exportTest = body;
+    fs.appendFile(filePath, body, () => {
       res.end();
     });
   });
   res.send("POST tis test");
-  console.log('post');
+  console.log("post");
 });
 
 app.get("/register/:id", (req, res) => {
-  res.send('Discord id: ' + Buffer.from(req.params.id,'base64').toString('ascii') + `Discord tag: ${userTag}`);
+  res.send(
+    "Discord id: " +
+      Buffer.from(req.params.id, "base64").toString("ascii") +
+      `Discord tag: ${userTag}`
+  );
   // res.sendFile(path.join(__dirname,"../website/Public_resources/setup/index.html"));
-  
+
   //TODO: Lav register side.
 });
 
@@ -83,7 +91,6 @@ for (const file of eventFiles) {
   } else {
     client.on(event.name, (...args) => event.execute(...args));
   }
-
 }
 // Dynamic import of commands from commands directory
 client.commands = new Collection();
@@ -119,5 +126,6 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.login(process.env.BOT_TOKEN);
-// console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg== 
+// console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg==
 // console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
+module.exports = {exportTest}
