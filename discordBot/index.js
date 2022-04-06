@@ -29,6 +29,12 @@ app.get("/", (req, res) => {
     path.join(__dirname, "../website/Public_resources/setup/index.html")
   );
 });
+
+
+
+
+
+function input_reciver(){ 
 app.post("/", (req, res) => {
   let body = "";
   filePath = __dirname + "/data.txt";
@@ -47,6 +53,10 @@ app.post("/", (req, res) => {
   res.send("POST tis test");
   console.log("post");
 });
+}
+
+
+
 
 app.get("/register/:id", (req, res) => {
   res.send(
@@ -128,4 +138,4 @@ client.on("interactionCreate", async (interaction) => {
 client.login(process.env.BOT_TOKEN);
 // console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg==
 // console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
-module.exports = {exportTest}
+module.exports = {exportTest, input_reciver}
