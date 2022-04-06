@@ -1,23 +1,53 @@
+const fs = require("fs");
+const fetch = require("node-fetch");
 const { default: axios } = require('axios');
+const { connectDB } = require('../database/connectDB');
+const { fetchUser } = require('../database/manageUserDB');
+const {reader} = require('./printsortdata');
+
+let id_array = [];
+
+connectDB();
 
 async function commingCourses() {
-    let profile = await axios.get('http://localhost:3000/users/fetchUser/' + "321312543547064321")
-                                .then(async (res) => {
+    let profile = await fetchUser("321312543547064321");
                                     await axios.get("https://www.moodle.aau.dk/webservice/rest/server.php", {        
                                         params: {
-                                            wstoken: res.data.moodle_token,
+                                            wstoken: profile.moodle_token,
                                             wsfunction: "core_calendar_get_calendar_upcoming_view",
                                             moodlewsrestformat: "json"       
                                         }
                                     }).then((res) => {
-                                        console.log(res.data.events[0].course.id)
+                                        for(let i in res.data.events){
+                                        console.log(res.data.events[i].course.id)
+                                        }
                                     }).catch((err) => {
                                         console.log(err);
                                     })
-                                });
 }
 
 commingCourses();
+
+async function fetch_data() {
+    var options = "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=fea55e838143611e65bdaef0a6c1e2b0&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=" + "41300";
+    
+    fetch(options)
+      .then((Response) => {
+        if (Response.ok) {
+          return Response.text();
+        } else {
+          throw new Error(`fejl status ${response.status}`);
+        }
+      })
+      .then((body) =>{
+          for (let i in body.summary){
+              console.log(body.summary[i])
+          }
+      });
+  }
+
+fetch_data();
+
 
 function timeConverter(UNIX_timestamp){
   let a = new Date(UNIX_timestamp * 1000);
@@ -32,4 +62,4 @@ function timeConverter(UNIX_timestamp){
   return time;
 }
 
-module.exports = { commingCourses };
+module.exports = { commingCourses};
