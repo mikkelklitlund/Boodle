@@ -8,12 +8,14 @@ const path = require("path");
 const { userTag } = require("./commands/createUser");
 // Read key and certificate for HTTPS in testing environment
 // TODO: get valid certificate
-const key = fs.readFileSync("selfsigned.key");
-const cert = fs.readFileSync("selfsigned.crt");
-const options = {
-  key: key,
-  cert: cert,
-};
+
+// !REMOVE
+// const key = fs.readFileSync("selfsigned.key");
+// const cert = fs.readFileSync("selfsigned.crt");
+// const options = {
+//   key: key,
+//   cert: cert,
+// };
 let moodleToken;
 //explicitly added hostname
 const hostname = '127.0.0.1';
@@ -33,8 +35,6 @@ app.get("/", (req, res) => {
 });
 
 
-
-function input_reciver(){ 
 app.post("/", (req, res) => {
   let body = "";
   filePath = __dirname + "/data.txt";
@@ -53,7 +53,6 @@ app.post("/", (req, res) => {
   res.send("POST tis test");
   console.log("post");
 });
-}
 
 
 
