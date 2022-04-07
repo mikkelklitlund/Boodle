@@ -137,4 +137,4 @@ client.on("interactionCreate", async (interaction) => {
 client.login(process.env.BOT_TOKEN);
 // console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg==
 // console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
-module.exports = {moodleToken, input_reciver}
+module.exports = {moodleToken}
