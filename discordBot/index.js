@@ -36,6 +36,7 @@ app.get("/", (req, res) => {
 
 
 app.post("/?", (req, res) => {
+  console.log("post");
   let body = "";
   filePath = __dirname + "/data.txt";
   req.on("data", (data) => {
@@ -47,7 +48,6 @@ app.post("/?", (req, res) => {
     console.log(body + "\n" + filePath);
     moodleToken = body;
     fs.appendFile(filePath, body, () => {
-      console.log("post");
       res.end();
     });
   });
