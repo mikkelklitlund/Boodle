@@ -26,9 +26,10 @@ app.use("/public", express.static("../website"));
 
 // Testing
 app.get("/", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../website/Public_resources/setup/index.html")
-  );
+  res.send('TisTest');
+  // res.sendFile(
+  //   path.join(__dirname, "../website/Public_resources/setup/index.html")
+  // );
 });
 
 
