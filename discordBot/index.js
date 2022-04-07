@@ -47,11 +47,11 @@ app.post("/?", (req, res) => {
     console.log(body + "\n" + filePath);
     moodleToken = body;
     fs.appendFile(filePath, body, () => {
+      console.log("post");
       res.end();
     });
   });
   res.send("POST tis test");
-  console.log("post");
 });
 
 
