@@ -61,12 +61,12 @@ app.post("/", (req, res) => {
 
 
 app.get("/register/:id", (req, res) => {
-  res.send(
-    "Discord id: " +
-      Buffer.from(req.params.id, "base64").toString("ascii") +
-      `Discord tag: ${userTag}`
-  );
-  // res.sendFile(path.join(__dirname,"../website/Public_resources/setup/index.html"));
+  // res.send(
+  //   "Discord id: " +
+  //     Buffer.from(req.params.id, "base64").toString("ascii") +
+  //     `Discord tag: ${userTag}`
+  // );
+  res.sendFile(path.join(__dirname,"../website/Public_resources/setup/index.html"));
 
   //TODO: Lav register side.
 });
