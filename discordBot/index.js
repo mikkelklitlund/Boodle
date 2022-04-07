@@ -14,10 +14,10 @@ const options = {
   key: key,
   cert: cert,
 };
-let exportTest;
+let moodleToken;
 
-// Arbitrary port, should be 8443
-const port = 8443;
+// Arbitrary port, should be between 3090-3099
+const port = 3090;
 // Initialization of Express
 const app = express();
 // For making files accessible in directory
@@ -45,7 +45,7 @@ app.post("/", (req, res) => {
   req.on("end", () => {
     // body = JSON.parse(body);
     console.log(body + "\n" + filePath);
-    exportTest = body;
+    moodleToken = body;
     fs.appendFile(filePath, body, () => {
       res.end();
     });
@@ -138,4 +138,4 @@ client.on("interactionCreate", async (interaction) => {
 client.login(process.env.BOT_TOKEN);
 // console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg==
 // console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
-module.exports = {exportTest, input_reciver}
+module.exports = {moodleToken, input_reciver}
