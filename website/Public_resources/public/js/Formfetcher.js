@@ -10,7 +10,7 @@ btnSubmit.addEventListener("click", async () => {
     Discord: PostDiscordid.value,
   };
 
-  let post = await fetch("https://localhost:8443/", {
+  let post = await fetch("https://fs-21-sw-2-a219a.p2datsw.cs.aau.dk/node0/", {
     method: "POST",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(formpost),

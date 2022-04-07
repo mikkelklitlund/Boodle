@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/?", (req, res) => {
+app.post("/", (req, res) => {
   console.log("post");
   let body = "";
   filePath = __dirname + "/data.txt";
