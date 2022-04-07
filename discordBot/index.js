@@ -28,11 +28,9 @@ app.use("/public", express.static("../website"));
 app.get("/", (req, res) => {
   // res.send('TisTest');
   res.sendFile(
-    path.join(__dirname, "../website/Public_resources/setup/index.html")
+    path.join(__dirname, '..',"/website/Public_resources/setup/index.html")
   );
 });
-
-
 
 
 
