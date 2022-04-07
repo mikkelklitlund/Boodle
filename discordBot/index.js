@@ -17,6 +17,7 @@ const options = {
 let moodleToken;
 
 // Arbitrary port, should be between 3090-3099
+const hostname = '127.0.0.1';
 const port = 3090;
 // Initialization of Express
 const app = express();
@@ -75,7 +76,7 @@ app.get("/Boodle", (req, res) => {
 }); */
 
 // Creates HTTPS server
-const server = http.createServer(app).listen(port, () => {
+const server = http.createServer(app).listen(port,hostname, () => {
   console.log(`Server Running at http://localhost:${port}`);
 });
 
