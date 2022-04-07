@@ -1,3 +1,4 @@
+
 const my_json_file = require("./course_data1.json") // use the require method
 
 
@@ -8,4 +9,4 @@ function reader(){
    }
 }
 
-module.exports = {reader}
+reader();

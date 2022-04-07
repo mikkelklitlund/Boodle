@@ -3,8 +3,7 @@ const fetch = require("node-fetch");
 const { default: axios } = require('axios');
 const { connectDB } = require('../database/connectDB');
 const { fetchUser } = require('../database/manageUserDB');
-const {reader} = require('./printsortdata');
-const {exportTest, input_reciver} = require('./discordBot/index')
+//const {moodle_token} = require('')
 let id_array = [];
 
 connectDB();
@@ -19,6 +18,8 @@ async function commingCourses() {
                                         }
                                     }).then((res) => {
                                         for(let i in res.data.events){
+                                          id_array[i] = res.data.events[i].course.id
+                                          fetch_data(id_array[i])
                                         console.log(res.data.events[i].course.id)
                                         }
                                     }).catch((err) => {
@@ -28,8 +29,10 @@ async function commingCourses() {
 
 commingCourses();
 
-async function fetch_data() {
-    var options = "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" + moodle_token +  "&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=" + "41300";
+const moodle_token = "fea55e838143611e65bdaef0a6c1e2b0"
+
+async function fetch_data(id_array) {
+    var options = "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" + moodle_token +  "&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=" + id_array;
     
     fetch(options)
       .then((Response) => {
@@ -39,14 +42,19 @@ async function fetch_data() {
           throw new Error(`fejl status ${response.status}`);
         }
       })
-      .then((body) =>{
-          for (let i in body.summary){
-              console.log(body.summary[i])
-          }
-      });
+      .then((body) => fs.writeFileSync("course_data1.json", body));
+      reader();
   }
 
-fetch_data();
+
+
+function reader(){
+  const my_json_file = require("./course_data1.json") 
+  
+   for (let i = 1; i < my_json_file.length; i++){
+       console.log(my_json_file[i].summary);
+   }
+}
 
 
 function timeConverter(UNIX_timestamp){
