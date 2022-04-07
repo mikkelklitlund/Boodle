@@ -2,7 +2,7 @@
 const fs = require("node:fs");
 require("dotenv").config();
 const { Client, Collection, Intents } = require("discord.js");
-const https = require("https");
+const http = require("http");
 const express = require("express");
 const path = require("path");
 const { userTag } = require("./commands/createUser");
@@ -75,8 +75,8 @@ app.get("/Boodle", (req, res) => {
 }); */
 
 // Creates HTTPS server
-const server = https.createServer(options, app).listen(port, () => {
-  console.log(`Server Running at https://localhost:${port}`);
+const server = http.createServer(app).listen(port, () => {
+  console.log(`Server Running at http://localhost:${port}`);
 });
 
 // Redirects stdin and out to stdout.log
