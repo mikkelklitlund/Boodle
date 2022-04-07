@@ -15,9 +15,9 @@ const options = {
   cert: cert,
 };
 let moodleToken;
-
-// Arbitrary port, should be between 3090-3099
+//explicitly added hostname
 const hostname = '127.0.0.1';
+// Arbitrary port, should be between 3090-3099
 const port = 3090;
 // Initialization of Express
 const app = express();
@@ -28,7 +28,7 @@ app.use("/public", express.static("../website"));
 app.get("/", (req, res) => {
   // res.send('TisTest');
   res.sendFile(
-    path.join(__dirname, '..',"/website/Public_resources/setup/index.html")
+    path.join(__dirname, '..',"/website/Public_resources/Setup/index.html")
   );
 });
 
