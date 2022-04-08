@@ -30,7 +30,7 @@ app.use("/public", express.static("../website"));
 app.get("/", (req, res) => {
   // res.send('TisTest');
   res.sendFile(
-    path.join(__dirname, '..',"/website/Public_resources/Setup/index.html")
+    path.join(__dirname, '..','website/resources/webpage.html')
   );
 });
 
@@ -63,7 +63,7 @@ app.get("/register/:id", (req, res) => {
   //     Buffer.from(req.params.id, "base64").toString("ascii") +
   //     `Discord tag: ${userTag}`
   // );
-  res.sendFile(path.join(__dirname,"../website/Public_resources/setup/index.html"));
+  res.sendFile(path.join(__dirname,"..website/resources/webpage.html"));
 
   //TODO: Lav register side.
 });
