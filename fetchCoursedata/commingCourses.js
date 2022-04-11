@@ -5,6 +5,7 @@ const { connectDB } = require('../database/connectDB');
 const { fetchUser } = require('../database/manageUserDB');
 //const {moodle_token} = require('')
 let id_array = [];
+let course_number = [];
 
 connectDB();
 
@@ -19,6 +20,7 @@ async function commingCourses() {
                                     }).then((res) => {
                                         for(let i in res.data.events){
                                           id_array[i] = res.data.events[i].course.id
+                                          course_number[i] = res.data.events[i].course
                                           fetch_data(id_array[i])
                                         console.log(res.data.events[i].course.id)
                                         }

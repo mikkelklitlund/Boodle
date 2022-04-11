@@ -6,8 +6,8 @@ const my_json_file = require("./course_data1.json");
 
 
 
-async function fetch_data(courseid) {
-  var options = "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=fea55e838143611e65bdaef0a6c1e2b0&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=" + courseid;
+async function fetch_data() {
+  var options = "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=fea55e838143611e65bdaef0a6c1e2b0&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=" + "41300";
   
   fetch(options)
     .then((Response) => {
@@ -20,5 +20,4 @@ async function fetch_data(courseid) {
     .then((body) => fs.writeFileSync("course_data1.json", body));
 }
 
-
-module.exports = {fetch_data}
+fetch_data()

@@ -14,7 +14,7 @@ async function fetch_data() {
         }
       })
       .then((body) =>{
-              console.log(body)
+              console.log(body.summary)
       });
   }
   fetch_data()
