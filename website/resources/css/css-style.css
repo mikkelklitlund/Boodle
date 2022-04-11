@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200i,400&display=swap");
 
+/* Global variables */
 :root {
   --color-white: #f3f3f3;
-  --color-darkblue: #f81414;
   --color-darkblue-alpha: rgba(27, 27, 50, 0.8);
-  --color-green: rgba(249, 128, 18);
+  --color-orange: rgba(249, 128, 18);
 }
 
 *,
@@ -21,16 +21,11 @@ body {
   color: var(--color-white);
   margin: 0;
   background: var(--color-white);
-  background-image: linear-gradient(
-      115deg,
-      rgba(228, 124, 6, 0.8),
-      rgba(2, 172, 2, 0.9)
-    ),
-    url(/website/resources/images/backgroundimage.JPG);
+  background-image: url(/website/resources/images/backgroundimage.JPG);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  max-width: 60%;
+  max-width: 70%;
   margin: auto;
 }
 
@@ -55,25 +50,68 @@ body::before {
   background-position: center;
 }
 
-h1 {
-  font-size: 100px;
-  font-weight: bold;
-  line-height: 1.2;
-  color: rgba(249, 128, 18);
+
+/* Navigation bar */
+#nav-bar {
+  padding: 4.8rem;
+  background: #f81414;
 }
+
+#header-logo {
+  width:  5rem;
+  height: 5rem;
+  float: left;
+}
+
+#boodletext {
+  font-size: 4.8rem;
+  font-weight: bold;
+  line-height: 0rem;
+  color: var(--color-orange);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.left-nav {
+  float: right;
+}
+
+.right-nav {
+  float: left;
+}
+
+.nav-link {
+  display: block;
+  color: var(--color-white);
+  text-align: center;
+  padding: 10px 16px;
+  text-decoration: none;
+  float: right;
+  
+}
+nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0rem;
+  padding: 0rem;
+}
+
+li {
+  padding: 0.5rem;
+}
+
+/* */
 
 p {
   font-size: 1.125rem;
 }
 
-h1,
-p {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
 h2 {
-  color: rgba(249, 128, 18);
+  color: var(--color-orange);
 }
 
 label {
@@ -84,23 +122,19 @@ label {
 }
 
 input,
-button,
-select,
-textarea {
+button {
   margin: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-}
-
-button {
   border: none;
 }
 
+/*
 .container {
   width: 100%;
   margin: 3.125rem auto 0 auto;
-}
+} */
 
 @media (min-width: 576px) {
   .container {
@@ -119,13 +153,7 @@ button {
   margin-bottom: 1.875rem;
   text-align: center;
 }
-
-.logo {
-  width: 100px;
-  height: 100px;
-  float: inline-start;
-}
-
+/*
 .description {
   font-style: italic;
   font-weight: 200;
@@ -137,7 +165,7 @@ button {
   font-size: 0.9rem;
   color: #e4e4e4;
 }
-
+*/
 .text-center {
   text-align: center;
 }
@@ -182,7 +210,7 @@ form {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
-
+/*
 .input-radio,
 .input-checkbox {
   display: inline-block;
@@ -197,41 +225,17 @@ form {
   padding: 0.625rem;
   resize: vertical;
 }
-
+*/
 .submit-button {
   display: block;
   width: 50%;
   padding: 0.75rem;
-  background: var(--color-green);
+  background: var(--color-orange);
   color: inherit;
   border-radius: 2px;
   cursor: grab;
   margin-left: auto;
   margin-right: auto;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0rem;
-  padding: 0rem;
-}
-
-li {
-  float: right;
-}
-
-/* Navbar links */
-nav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
-}
-nav a:hover {
-  background-color: #ddd;
-  color: black;
 }
 
 /* Command table */
@@ -240,9 +244,11 @@ th,
 td {
   background-color: #ddd;
   color: black;
-  border: 2px solid;
+  border: 1.5px solid;
+  border-radius: 0.5rem;
   overflow-wrap: break-word;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  
 }

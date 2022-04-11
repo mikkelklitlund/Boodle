@@ -1,100 +1,97 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="./css/css-style.css" />
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Boodle</title>
-	</head>
+  <head>
+    <link rel="stylesheet" href="./css/css-style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boodle</title>
+  </head>
 
-	<body>
-		<form id="survey-form">
-			<header>
-				<nav id="nav-bar">
-					<ul>
-						<li>
-							<a class="nav-logo" href="#header"
-								><img
-									id="header-logo"
-									class="logo"
-									src="./images/boodlelogo.jpg"
-									alt="Boodle Logo"
-							/></a>
-						</li>
-						<li><a class="nav-link" href="#guide">Setup Guide</a></li>
-						<li><a class="nav-link" href="#commands">Commands</a></li>
-					</ul>
-				</nav>
-				<div class="header">
-					<h1>Boodle</h1>
+  <nav id="nav-bar">
+    <ul>
+      <li>
+        <img
+          id="header-logo"
+          class="left-nav"
+          src="./images/boodlelogo.jpg"
+          alt="Boodle Logo"
+        />
+      </li>
+      <li><h1 id="boodletext" class="left-nav">Boodle</h1></li>
+      <li><a class="nav-link right-nav" href="#guide">Setup Guide</a></li>
+      <li><a class="nav-link right nav" href="#commands">Commands</a></li>
+    </ul>
+  </nav>
 
-					<p>➠ Your loyal study partner</p>
-				</div>
-			</header>
+  <body>
+    <form>
+      <div>
+        <section id="introduction">
+          <h2>Boodle introduction</h2>
+        </section>
+        <p>
+          Boodle is your new tool to help make your study life easier. An easy
+          and quick guide on how to setup this tool will follow.
+        </p>
+      </div>
 
-			<div>
-				<p>
-					Boodle is your new tool to help make your study life easier. An easy
-					and quick guide on how to setup this tool will follow.
-				</p>
-			</div>
+      <section id="guide">
+        <h2>Guide on how to setup Boodle</h2>
+      </section>
+      <div class="form-group">
+        <label id="name-label" class="name-label" for="name"
+          >Moodle token</label
+        >
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="form-control"
+          placeholder="Enter your Moodle token"
+          required
+        />
+      </div>
 
-			<section class="guide" id="guide">
-				<h2>Guide on how to setup Boodle</h2>
-			</section>
-			<div class="form-group">
-				<label id="name-label" class="name-label" for="name"
-					>Moodle token</label
-				>
-				<input
-					type="text"
-					name="name"
-					id="name"
-					class="form-control"
-					placeholder="Enter your Moodle token"
-					required
-				/>
-			</div>
-			<div class="form-group">
-				<button type="submit" id="btnSubmit" class="submit-button">
-					Submit
-				</button>
-			</div>
+      <div class="form-group">
+        <button type="submit" id="btnSubmit" class="submit-button">
+          Submit
+        </button>
+      </div>
 
-			<section class="commands" id="commands">
-				<h2>Commands for Boodle</h2>
-				<p>
-					In this section you will see all the possible commands that you can
-					use with Boodle on Discord.
-				</p>
-				<table>
-					<thead>
-						<tr>
-							<th>Command</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>/tomorrow</th>
-							<th>Gives you the schedule for tomorrow.</th>
-						</tr>
-						<tr>
-							<th>/tomorrow</th>
-							<th>Gives you the schedule for tomorrow.</th>
-						</tr>
-						<tr>
-							<th>/tomorrow</th>
-							<th>Gives you the schedule for tomorrow.</th>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-		</form>
-	</body>
-	<script src="/website/js/Formfetcher.js"></script>
+      <section id="commands">
+        <h2>Commands for Boodle</h2>
+        <p>
+          In this section you will see all the possible commands that you can
+          use with Boodle on Discord.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>/tomorrow</th>
+              <th>Gives you the schedule for tomorrow.</th>
+            </tr>
+            <tr>
+              <th>/tomorrow</th>
+              <th>Gives you the schedule for tomorrow.</th>
+            </tr>
+            <tr>
+              <th>/tomorrow</th>
+              <th>Gives you the schedule for tomorrow.</th>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </form>
+  </body>
+  <script src="/website/js/Formfetcher.js"></script>
 </html>
 <!--
       <div class="form-group">
