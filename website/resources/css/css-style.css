@@ -1,16 +1,64 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200i,400&display=swap");
 
+/* Global variables */
 :root {
-  --color-white: #f3f3f3;
-  --color-darkblue: #f81414;
-  --color-darkblue-alpha: rgba(27, 27, 50, 0.8);
-  --color-green: rgba(249, 128, 18);
+  --color-white: #f3f3f3; /*text color */
+  --color-darkblue-alpha: rgba(27, 27, 50, 0.8); /*background color */
+  --color-orange: rgba(249, 128, 18); /*ændr til header color */
 }
 
-*,
-*::before,
-*::after {
+/* Navigation bar */
+nav{
+  text-decoration: none;
+  list-style: none;
+  background: var(--color-orange);
+  border-radius: 0.5rem;
   box-sizing: border-box;
+  height: 8rem;
+  line-height: 8rem;
+  width: 100%;
+}
+
+#header-logo {
+  width: 5rem;
+  height: 5rem;
+}
+
+label.boodletext {
+  color: var(--color-white);
+  font-size: 4.8rem;
+  font-weight: bold;
+}
+
+#leftnav {
+  float: left;
+  margin-right: 1rem;
+}
+
+#rightnav {
+  float: right;
+}
+
+nav ul {
+  margin-right: 1rem;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.nav-link {
+  color: var(--color-white);
+  padding: 10px 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: black;
 }
 
 body {
@@ -21,16 +69,11 @@ body {
   color: var(--color-white);
   margin: 0;
   background: var(--color-white);
-  background-image: linear-gradient(
-      115deg,
-      rgba(228, 124, 6, 0.8),
-      rgba(2, 172, 2, 0.9)
-    ),
-    url(/website/resources/images/backgroundimage.JPG);
+  background-image: url(/public/resources/images/backgroundimage.JPG);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  max-width: 60%;
+  max-width: 70%;
   margin: auto;
 }
 
@@ -46,37 +89,23 @@ body::before {
   background: var(--color-white);
   background-image: linear-gradient(
       115deg,
-      rgba(76, 188, 208, 0.9),
-      rgba(76, 188, 208, 0.8)
+      var(--color-darkblue-alpha, 0.95), var(--color-darkblue-alpha, 0.9)
     ),
-    url(/website/resources/images/backgroundimage.JPG);
+    url(/public/resources/images/backgroundimage.JPG);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-h1 {
-  font-size: 100px;
-  font-weight: bold;
-  line-height: 1.2;
-  color: rgba(249, 128, 18);
 }
 
 p {
   font-size: 1.125rem;
 }
 
-h1,
-p {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
 h2 {
-  color: rgba(249, 128, 18);
+  color: var(--color-orange);
 }
 
-label {
+#name-label {
   display: flex;
   align-items: center;
   font-size: 1.125rem;
@@ -84,23 +113,20 @@ label {
 }
 
 input,
-button,
-select,
-textarea {
+button {
   margin: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-}
-
-button {
   border: none;
+  box-sizing: border-box;
 }
 
+/*
 .container {
   width: 100%;
   margin: 3.125rem auto 0 auto;
-}
+} */
 
 @media (min-width: 576px) {
   .container {
@@ -119,13 +145,7 @@ button {
   margin-bottom: 1.875rem;
   text-align: center;
 }
-
-.logo {
-  width: 100px;
-  height: 100px;
-  float: inline-start;
-}
-
+/*
 .description {
   font-style: italic;
   font-weight: 200;
@@ -137,7 +157,7 @@ button {
   font-size: 0.9rem;
   color: #e4e4e4;
 }
-
+*/
 .text-center {
   text-align: center;
 }
@@ -182,7 +202,7 @@ form {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
-
+/*
 .input-radio,
 .input-checkbox {
   display: inline-block;
@@ -197,41 +217,17 @@ form {
   padding: 0.625rem;
   resize: vertical;
 }
-
+*/
 .submit-button {
   display: block;
   width: 50%;
   padding: 0.75rem;
-  background: var(--color-green);
+  background: var(--color-orange);
   color: inherit;
   border-radius: 2px;
   cursor: grab;
   margin-left: auto;
   margin-right: auto;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0rem;
-  padding: 0rem;
-}
-
-li {
-  float: right;
-}
-
-/* Navbar links */
-nav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
-}
-nav a:hover {
-  background-color: #ddd;
-  color: black;
 }
 
 /* Command table */
@@ -240,9 +236,11 @@ th,
 td {
   background-color: #ddd;
   color: black;
-  border: 2px solid;
+  border: 1.5px solid;
+  border-radius: 0.5rem;
   overflow-wrap: break-word;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  
 }

@@ -28,10 +28,10 @@
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "esm": "^3.2.25",
+    "express": "^4.17.3",
     "jest": "^27.5.1",
     "mongodb-memory-server": "^8.1.4",
     "mongoose": "^6.2.8",
-    "express": "^4.17.3",
     "mongoose-encryption": "^2.1.2",
     "pug": "^3.0.2"
   },

@@ -5,17 +5,8 @@ const { Client, Collection, Intents } = require("discord.js");
 const http = require("http");
 const express = require("express");
 const path = require("path");
-const { userTag } = require("./commands/createUser");
-// Read key and certificate for HTTPS in testing environment
-// TODO: get valid certificate
 
-// !REMOVE
-// const key = fs.readFileSync("selfsigned.key");
-// const cert = fs.readFileSync("selfsigned.crt");
-// const options = {
-//   key: key,
-//   cert: cert,
-// };
+
 let moodleToken;
 //explicitly added hostname
 const hostname = '127.0.0.1';
@@ -25,6 +16,8 @@ const port = 3090;
 const app = express();
 // For making files accessible in directory
 app.use("/public", express.static("../website"));
+app.set('views',path.join(process.cwd(), '../website/resources'));
+app.set('view engine', 'pug');
 
 // Testing
 app.get("/", (req, res) => {
@@ -51,21 +44,36 @@ app.post("/", (req, res) => {
       res.end();
     });
   });
-  res.send("POST tis test");
+  // res.send("POST tis test");
 });
 
 
-
-
+// Path for registration of Moodle token
 app.get("/register/:id", (req, res) => {
   // res.send(
   //   "Discord id: " +
   //     Buffer.from(req.params.id, "base64").toString("ascii") +
   //     `Discord tag: ${userTag}`
   // );
-  res.sendFile(path.join(__dirname,"..website/resources/webpage.html"));
+  // res.sendFile(path.join(__dirname,"..website/resources/webpage.html"));
+  res.render('webpage.pug',{id: Buffer.from(req.params.id,'base64').toString('utf-8') });
 
-  //TODO: Lav register side.
+  // TODO: Lav register side.
+});
+
+app.post("/regiser/:id", (req, res) => {
+  console.log(`POST request from ${Buffer.from(req.params.id,'base64').toString('utf-8')}`);
+
+  let body = "";
+
+  req.on('data', (data) => {
+    body += data;
+  });
+
+  req.on('end', () => {
+    // TODO: Send til DB
+    console.log('POST request ended');
+  });
 });
 
 /* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle

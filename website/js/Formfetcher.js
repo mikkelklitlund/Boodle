@@ -1,6 +1,6 @@
 let formSubmit = document.querySelector('#formSubmit');
 let btnSubmit = document.querySelector('#btnSubmit');
-
+//! lav om
 btnSubmit.addEventListener("click", async () => {
   let PostMoodletoken = document.querySelector("#PostMoodletoken");
   //let PostDiscordid = document.querySelector("#PostDiscordid");

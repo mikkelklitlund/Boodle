@@ -1,0 +1,57 @@
+doctype html
+head
+  link(rel='stylesheet' href='/public/resources/css/css-style.css')
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Boodle
+#nav-bar
+  nav
+    ul
+      #leftnav
+        li
+          img#header-logo(src='/public/resources/images/boodlelogo.jpg' alt='Boodle Logo')
+        li
+          label.boodletext Boodle
+      #rightnav
+        li
+          a.nav-link(href='#guide') Setup Guide
+        li
+          a.nav-link(href='#commands') Commands
+form
+  div
+    section#introduction
+      h2 Boodle introduction
+    p
+      | Boodle is your new tool to help make your study life easier. An easy
+      | and quick guide on how to setup this tool will follow.
+  section#guide
+    h2 Guide on how to setup Boodle
+  .form-group
+    label#name-label.name-label(for='name') Moodle token
+    input#name.form-control(type='text' name='name' placeholder='Enter your Moodle token' required='')
+  .form-group
+    button#btnSubmit.submit-button(type='submit')
+      | Submit
+    p This will connect the Moodle token to this discord id: #{id}. Not yours? do not submit your Moodle token or you risk compromising your token.
+  section#commands
+    h2 Commands for Boodle
+    p
+      | In this section you will see all the possible commands that you can
+      | use with Boodle on Discord.
+    table
+      thead
+        tr
+          th Command
+          th Description
+      tbody
+        tr
+          th /tomorrow
+          th Gives you the schedule for tomorrow.
+        tr
+          th /tomorrow
+          th Gives you the schedule for tomorrow.
+        tr
+          th /tomorrow
+          th Gives you the schedule for tomorrow.
+script(src='/public/resources/js/Formfetcher.js')
