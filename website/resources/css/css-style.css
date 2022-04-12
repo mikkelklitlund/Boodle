@@ -2,15 +2,63 @@
 
 /* Global variables */
 :root {
-  --color-white: #f3f3f3;
-  --color-darkblue-alpha: rgba(27, 27, 50, 0.8);
-  --color-orange: rgba(249, 128, 18);
+  --color-white: #f3f3f3; /*text color */
+  --color-darkblue-alpha: rgba(27, 27, 50, 0.8); /*background color */
+  --color-orange: rgba(249, 128, 18); /*ændr til header color */
 }
 
-*,
-*::before,
-*::after {
+/* Navigation bar */
+nav{
+  text-decoration: none;
+  list-style: none;
+  background: var(--color-orange);
+  border-radius: 0.5rem;
   box-sizing: border-box;
+  height: 8rem;
+  line-height: 8rem;
+  width: 100%;
+}
+
+#header-logo {
+  width: 5rem;
+  height: 5rem;
+}
+
+label.boodletext {
+  color: var(--color-white);
+  font-size: 4.8rem;
+  font-weight: bold;
+}
+
+#leftnav {
+  float: left;
+  margin-right: 1rem;
+}
+
+#rightnav {
+  float: right;
+}
+
+nav ul {
+  margin-right: 1rem;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.nav-link {
+  color: var(--color-white);
+  padding: 10px 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: black;
 }
 
 body {
@@ -41,70 +89,13 @@ body::before {
   background: var(--color-white);
   background-image: linear-gradient(
       115deg,
-      rgba(76, 188, 208, 0.9),
-      rgba(76, 188, 208, 0.8)
+      var(--color-darkblue-alpha, 0.95), var(--color-darkblue-alpha, 0.9)
     ),
     url(/website/resources/images/backgroundimage.JPG);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
-
-
-/* Navigation bar */
-#nav-bar {
-  padding: 4.8rem;
-  background: #f81414;
-}
-
-#header-logo {
-  width:  5rem;
-  height: 5rem;
-  float: left;
-}
-
-#boodletext {
-  font-size: 4.8rem;
-  font-weight: bold;
-  line-height: 0rem;
-  color: var(--color-orange);
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-.left-nav {
-  float: right;
-}
-
-.right-nav {
-  float: left;
-}
-
-.nav-link {
-  display: block;
-  color: var(--color-white);
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
-  float: right;
-  
-}
-nav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0rem;
-  padding: 0rem;
-}
-
-li {
-  padding: 0.5rem;
-}
-
-/* */
 
 p {
   font-size: 1.125rem;
@@ -114,7 +105,7 @@ h2 {
   color: var(--color-orange);
 }
 
-label {
+#name-label {
   display: flex;
   align-items: center;
   font-size: 1.125rem;
@@ -128,6 +119,7 @@ button {
   font-size: inherit;
   line-height: inherit;
   border: none;
+  box-sizing: border-box;
 }
 
 /*
