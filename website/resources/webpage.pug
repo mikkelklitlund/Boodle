@@ -18,7 +18,7 @@ head
           a.nav-link(href='#guide') Setup Guide
         li
           a.nav-link(href='#commands') Commands
-form
+form(method='post')
   div
     section#introduction
       h2 Boodle introduction
@@ -29,11 +29,12 @@ form
     h2 Guide on how to setup Boodle
   .form-group
     label#name-label.name-label(for='name') Moodle token
-    input#name.form-control(type='text' name='name' placeholder='Enter your Moodle token' required='')
+    input#postDiscordId.form-control(type='text' name='DiscordId' readonly='' value=`${id}`)
+    input#postMoodletoken.form-control(type='text' name='MoodleToken' placeholder='Enter your Moodle token' required='')
   .form-group
-    button#btnSubmit.submit-button(type='submit')
+    button#btnSubmit.submit-button(type='submit' formmethod='post')
       | Submit
-    p This will connect the Moodle token to this discord id: #{id}. Not yours? do not submit your Moodle token or you risk compromising your token.
+    p This will connect the Moodle token to this discord id: #{id}
   section#commands
     h2 Commands for Boodle
     p

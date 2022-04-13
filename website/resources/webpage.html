@@ -30,7 +30,7 @@
       </nav>
     </div>
 
-    <form>
+    <form method="post">
       <div>
         <section id="introduction">
           <h2>Boodle introduction</h2>
@@ -50,8 +50,15 @@
         >
         <input
           type="text"
-          name="name"
-          id="PostMoodletoken"
+          name="DiscordId"
+          id="postDiscordId"
+          class="form-control"
+          readonly
+        />
+        <input
+          type="text"
+          name="Moodletoken"
+          id="postMoodletoken"
           class="form-control"
           placeholder="Enter your Moodle token"
           required
@@ -59,7 +66,12 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" id="btnSubmit" class="submit-button">
+        <button
+          type="submit"
+          id="btnSubmit"
+          class="submit-button"
+          formmethod="post"
+        >
           Submit
         </button>
         <p>This will connect the Moodle token to this discord id:</p>
@@ -95,6 +107,6 @@
         </table>
       </section>
     </form>
-  <script src="/public/resources/js/Formfetcher.js"></script>
+    <script src="/public/resources/js/Formfetcher.js"></script>
   </body>
 </html>
