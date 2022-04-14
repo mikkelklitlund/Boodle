@@ -2,38 +2,39 @@
 const fs = require("node:fs");
 require("dotenv").config();
 const { Client, Collection, Intents } = require("discord.js");
+
 const http = require("http");
 const express = require("express");
 const path = require("path");
-const { userTag } = require("./commands/createUser");
-// Read key and certificate for HTTPS in testing environment
-// TODO: get valid certificate
+const { body, validationResult } = require("express-validator");
+const registerRoute = require('./routes/register');
+// const { createUser } = require("../database/manageUserDB");
 
-// !REMOVE
-// const key = fs.readFileSync("selfsigned.key");
-// const cert = fs.readFileSync("selfsigned.crt");
-// const options = {
-//   key: key,
-//   cert: cert,
-// };
 let moodleToken;
 //explicitly added hostname
-const hostname = '127.0.0.1';
+const hostname = "127.0.0.1";
 // Arbitrary port, should be between 3090-3099
 const port = 3090;
 // Initialization of Express
 const app = express();
 // For making files accessible in directory
 app.use("/public", express.static("../website"));
+app.set("views", path.join(process.cwd(), "../website/resources"));
+app.set("view engine", "pug");
 
+// Creates HTTPS server
+const server = http.createServer(app).listen(port, hostname, () => {
+  console.log(`Server Running at http://localhost:${port}`);
+});
+
+// Moves methods on /register to ./routes/register.js
+app.use('/register', registerRoute);
+// TODO: flyt express routing ud af index.js
 // Testing
 app.get("/", (req, res) => {
   // res.send('TisTest');
-  res.sendFile(
-    path.join(__dirname, '..','website/resources/webpage.html')
-  );
+  res.sendFile(path.join(__dirname, "..", "website/resources/webpage.html"));
 });
-
 
 app.post("/", (req, res) => {
   console.log("post");
@@ -51,32 +52,15 @@ app.post("/", (req, res) => {
       res.end();
     });
   });
-  res.send("POST tis test");
+  // res.send("POST tis test");
 });
 
-
-
-
-app.get("/register/:id", (req, res) => {
-  // res.send(
-  //   "Discord id: " +
-  //     Buffer.from(req.params.id, "base64").toString("ascii") +
-  //     `Discord tag: ${userTag}`
-  // );
-  res.sendFile(path.join(__dirname,"..website/resources/webpage.html"));
-
-  //TODO: Lav register side.
-});
 
 /* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
 app.get("/Boodle", (req, res) => {
   res.sendFile(path.join(__dirname, "../html/BoodleHjemmeside.html"));
 }); */
 
-// Creates HTTPS server
-const server = http.createServer(app).listen(port,hostname, () => {
-  console.log(`Server Running at http://localhost:${port}`);
-});
 
 // Redirects stdin and out to stdout.log
 // let access = fs.createWriteStream('./stdout.log', { flags: 'a'});
@@ -135,6 +119,4 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.login(process.env.BOT_TOKEN);
-// console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg==
-// console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
-module.exports = {moodleToken}
+module.exports = { moodleToken };
