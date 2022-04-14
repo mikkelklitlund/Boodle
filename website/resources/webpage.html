@@ -50,15 +50,8 @@
         >
         <input
           type="text"
-          name="DiscordId"
-          id="postDiscordId"
-          class="form-control"
-          readonly
-        />
-        <input
-          type="text"
-          name="Moodletoken"
-          id="postMoodletoken"
+          name="name"
+          id="name"
           class="form-control"
           placeholder="Enter your Moodle token"
           required
@@ -66,15 +59,9 @@
       </div>
 
       <div class="form-group">
-        <button
-          type="submit"
-          id="btnSubmit"
-          class="submit-button"
-          formmethod="post"
-        >
+        <button type="submit" id="btnSubmit" class="submit-button">
           Submit
         </button>
-        <p>This will connect the Moodle token to this discord id:</p>
       </div>
 
       <section id="commands">
@@ -108,4 +95,5 @@
       </section>
     </form>
   </body>
+  <script src="/website/js/Formfetcher.js"></script>
 </html>
