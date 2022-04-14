@@ -7,7 +7,7 @@ const http = require("http");
 const express = require("express");
 const path = require("path");
 const { body, validationResult } = require("express-validator");
-
+const registerRoute = require('./routes/register');
 // const { createUser } = require("../database/manageUserDB");
 
 let moodleToken;
@@ -21,6 +21,14 @@ const app = express();
 app.use("/public", express.static("../website"));
 app.set("views", path.join(process.cwd(), "../website/resources"));
 app.set("view engine", "pug");
+
+// Creates HTTPS server
+const server = http.createServer(app).listen(port, hostname, () => {
+  console.log(`Server Running at http://localhost:${port}`);
+});
+
+// Moves methods on /register to ./routes/register.js
+app.use('/register', registerRoute);
 
 // Testing
 app.get("/", (req, res) => {
@@ -47,58 +55,12 @@ app.post("/", (req, res) => {
   // res.send("POST tis test");
 });
 
-// Path for registration of Moodle token
-app.get("/register/:id/", (req, res) => {
-  // res.send(
-  //   "Discord id: " +
-  //     Buffer.from(req.params.id, "base64").toString("ascii") +
-  //     `Discord tag: ${userTag}`
-  // );
-  // res.sendFile(path.join(__dirname,"..website/resources/webpage.html"));
-  res.render("webpage.pug", {
-    id: Buffer.from(req.params.id, "base64").toString("utf-8"),
-  });
-
-  // TODO: Lav register side.
-});
-// ?name=:name
-app.post("/register/:id/", (req, res) => {
-  console.log(
-    `POST request from ${Buffer.from(req.params.id, "base64").toString(
-      "utf-8"
-    )}`
-  );
-
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    res.status("400").send("Input validation failed");
-  }
-
-  let body = "";
-  req.on("data", (data) => {
-    body += data;
-  });
-
-  req.on("end", () => {
-    const discordId = body.substring(body.indexOf("=") + 1, body.indexOf("&"));
-    const MoodleToken = body.substring(body.lastIndexOf("=") + 1, body.length);
-    console.log(
-      `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}`
-    );
-    // TODO: Send til DB og check om bruger findes i forvejen
-    res.end();
-  });
-});
 
 /* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
 app.get("/Boodle", (req, res) => {
   res.sendFile(path.join(__dirname, "../html/BoodleHjemmeside.html"));
 }); */
 
-// Creates HTTPS server
-const server = http.createServer(app).listen(port, hostname, () => {
-  console.log(`Server Running at http://localhost:${port}`);
-});
 
 // Redirects stdin and out to stdout.log
 // let access = fs.createWriteStream('./stdout.log', { flags: 'a'});
@@ -157,6 +119,4 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.login(process.env.BOT_TOKEN);
-// console.log(Buffer.from('din mor').toString('base64')); // din mor -> ZGluIG1vcg==
-// console.log(Buffer.from('ZGluIG1vcg==','base64').toString('utf8')); // ZGluIG1vcg== -> din mor
 module.exports = { moodleToken };
