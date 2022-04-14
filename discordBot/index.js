@@ -29,7 +29,7 @@ const server = http.createServer(app).listen(port, hostname, () => {
 
 // Moves methods on /register to ./routes/register.js
 app.use('/register', registerRoute);
-
+// TODO: flyt express routing ud af index.js
 // Testing
 app.get("/", (req, res) => {
   // res.send('TisTest');
