@@ -15,9 +15,13 @@ const aboutRoute = require('./routes/about.js')
 
 // TODO: Få createUser til at virke
 // DB related modules
-// const { connectDB } = require('../database/connectDB');
-// connectDB();
 // const { createUser } = require("../database/manageUserDB");
+const { body, validationResult } = require("express-validator");
+const registerRoute = require('./routes/register');
+const connectDB = require('../database/connectDB');
+
+// Creates connection to database
+connectDB();
 
 // let moodleToken;
 //explicitly added hostname
