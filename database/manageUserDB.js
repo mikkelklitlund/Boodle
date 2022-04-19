@@ -31,7 +31,6 @@ async function updateUser(disc_id, moodle_token) {
     //Set new moodle token
     profileData.moodle_token = moodle_token;
     await profileData.save();
-    console.log("User updated!");
 }
 
 module.exports = { createUser, updateUser, fetchUser };
