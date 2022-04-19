@@ -1,11 +1,21 @@
-// Require packages needed
+// Discord modules
 const fs = require("node:fs");
 require("dotenv").config();
 const { Client, Collection, Intents } = require("discord.js");
 
+// HTTP server modules
 const http = require("http");
 const express = require("express");
 const path = require("path");
+// const { body, validationResult } = require("express-validator");
+// All route modules have CRUD capability, but 
+const registerRoute = require('./routes/register.js');
+const aboutRoute = require('./routes/about.js')
+
+
+// TODO: Få createUser til at virke
+// DB related modules
+// const { createUser } = require("../database/manageUserDB");
 const { body, validationResult } = require("express-validator");
 const registerRoute = require('./routes/register');
 const connectDB = require('../database/connectDB');
@@ -13,7 +23,7 @@ const connectDB = require('../database/connectDB');
 // Creates connection to database
 connectDB();
 
-let moodleToken;
+// let moodleToken;
 //explicitly added hostname
 const hostname = "127.0.0.1";
 // Arbitrary port, should be between 3090-3099
@@ -30,12 +40,12 @@ const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server Running at http://localhost:${port}`);
 });
 
-// Moves methods on /register to ./routes/register.js
+// Moves HTTP methods on /register to ./routes/register.js
 app.use('/register', registerRoute);
+app.use('/about', aboutRoute);
 // TODO: flyt express routing ud af index.js
 // Testing
 app.get("/", (req, res) => {
-  // res.send('TisTest');
   res.sendFile(path.join(__dirname, "..", "website/resources/webpage.html"));
 });
 
@@ -59,12 +69,6 @@ app.post("/", (req, res) => {
 });
 
 
-/* // Sends BoodleHjemmeside.html on accessing localhost:4000/Boodle
-app.get("/Boodle", (req, res) => {
-  res.sendFile(path.join(__dirname, "../html/BoodleHjemmeside.html"));
-}); */
-
-
 // Redirects stdin and out to stdout.log
 // let access = fs.createWriteStream('./stdout.log', { flags: 'a'});
 // process.stdout.write = process.stderr.write = access.write.bind(access);
@@ -72,7 +76,9 @@ app.get("/Boodle", (req, res) => {
 // process.on('uncaughtException', function(err) {
 // 	console.error((err && err.stack) ? err.stack : err);
 // });
-// Intents for Discord bot
+
+
+// Intents for Discord bot---
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 // Reads files in events folder with js suffix
@@ -122,4 +128,4 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.login(process.env.BOT_TOKEN);
-module.exports = { moodleToken };
+// module.exports = { moodleToken };
