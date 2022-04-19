@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const { createUser } = require('../../database/manageUserDB');
+// const { createUser } = require('../../database/manageUserDB');
 
 router.get("/:id/", (req, res) => {
   // Site generated from /setup command
@@ -34,7 +34,11 @@ router.post("/:id/", (req, res) => {
       `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}`
     );
     // TODO: Send til DB og check om bruger findes i forvejen
-    await createUser(discordId, MoodleToken);
+    // await createUser(discordId, MoodleToken);
+    res.status('201');
+    res.render("webpage.pug", {
+        id: Buffer.from(req.params.id, "base64").toString("utf-8"),
+    });
     res.end();
   });
 });

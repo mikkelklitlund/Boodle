@@ -11,17 +11,15 @@ const path = require("path");
 // All route modules have CRUD capability, but 
 const registerRoute = require('./routes/register.js');
 const aboutRoute = require('./routes/about.js')
+const { body, validationResult } = require("express-validator");
 
 
 // TODO: Få createUser til at virke
 // DB related modules
 // const { createUser } = require("../database/manageUserDB");
-const { body, validationResult } = require("express-validator");
-const registerRoute = require('./routes/register');
-const connectDB = require('../database/connectDB');
 
 // Creates connection to database
-connectDB();
+// connectDB();
 
 // let moodleToken;
 //explicitly added hostname
