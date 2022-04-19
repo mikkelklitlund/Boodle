@@ -8,7 +8,10 @@ const express = require("express");
 const path = require("path");
 const { body, validationResult } = require("express-validator");
 const registerRoute = require('./routes/register');
-// const { createUser } = require("../database/manageUserDB");
+const connectDB = require('../database/connectDB');
+
+// Creates connection to database
+connectDB();
 
 let moodleToken;
 //explicitly added hostname
