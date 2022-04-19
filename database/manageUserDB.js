@@ -6,7 +6,7 @@ function fetchUser (disc_id) {
 }
 
 //Create a new user (document) in database
-async function createUser(disc_id, moodleToken) {
+async function createUser(disc_id, moodle_token) {
     const profileData = await fetchUser(disc_id);
     
     if (profileData) {
@@ -14,14 +14,14 @@ async function createUser(disc_id, moodleToken) {
     }
     const newUser = new profileModel({
         discord_id: disc_id,
-        moodle_token: moodleToken,
+        moodle_token: moodle_token,
     })
 
     await newUser.save();
 } 
 
 //Updating a user's moodle token
-async function updateUser(disc_id, moodleToken) {
+async function updateUser(disc_id, moodle_token) {
     const profileData = await fetchUser(disc_id);
     
     if (!profileData) {
@@ -29,7 +29,7 @@ async function updateUser(disc_id, moodleToken) {
     }
     
     //Set new moodle token
-    profileData.moodle_token = moodleToken;
+    profileData.moodle_token = moodle_token;
     await profileData.save();
     console.log("User updated!");
 }

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
+const { createUser } = require('../../database/manageUserDB');
 
 router.get("/:id/", (req, res) => {
   // Site generated from /setup command
@@ -26,13 +27,14 @@ router.post("/:id/", (req, res) => {
     body += data;
   });
   // Parses POST request
-  req.on("end", () => {
+  req.on("end", async () => {
     const discordId = body.substring(body.indexOf("=") + 1, body.indexOf("&"));
     const MoodleToken = body.substring(body.lastIndexOf("=") + 1, body.length);
     console.log(
       `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}`
     );
     // TODO: Send til DB og check om bruger findes i forvejen
+    await createUser(discordId, MoodleToken);
     res.end();
   });
 });
