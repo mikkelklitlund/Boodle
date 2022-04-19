@@ -38,10 +38,23 @@ router.post("/:id/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+  res.send({
+    body: `PUT method not implemented, user ${Buffer.from(
+      req.params.id,
+      "base64"
+    ).toString("utf-8")} not updated`,
+  });
   //TBD
 });
 
 router.delete("/:id", (req, res) => {
+  res.send({
+    body: `DELETE method not implemented, user ${Buffer.from(
+      req.params.id,
+      "base64"
+    ).toString("utf-8")} not deleted`,
+  });
+  // TODO DB delete user
   //TBD
 });
 
