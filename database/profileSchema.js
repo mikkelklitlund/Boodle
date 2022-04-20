@@ -10,7 +10,13 @@ const sigKey = process.env.SOME_64BYTE_BASE64_STRING;
 const profileSchema = new mongoose.Schema({
     discord_id: { type: String, require: true},
     moodle_token: { type: String, require: true},
-})
+},
+{
+    timestamps: {
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
+    },
+  })
 
 //Encrypt moodle token
 profileSchema.plugin(encrypt, { encryptionKey: encKey, signingKey: sigKey, encryptedFields: ['moodle_token'] });
