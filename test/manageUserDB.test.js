@@ -1,6 +1,6 @@
 require('dotenv').config();
 const db = require('./db');
-const { createUser, fetchUser, updateUser } = require('../database/manageUserDB');
+const { createUser, fetchUser, updateUser, deleteUser } = require('../database/manageUserDB');
 const profileModel = require('../database/profileSchema');
 
 beforeAll(async () =>  await db.connect());
@@ -43,23 +43,23 @@ describe("Fetch user", () => {
         const discord_id = "3452357445";
         const moodle_token = "34ffDSE8439Ujfe8f3jj"; 
 
-        //first creating user in db (assuming this works correctly, will be tested later on)
+        //First creating user in db (assuming this works correctly, will be tested later on)
         await createUser(discord_id, moodle_token);
 
-        //trying to fetch the newly created user
+        //Trying to fetch the newly created user
         const foundUser = await fetchUser(discord_id);
 
-        //compare found user with pre-defined values 
+        //Compare found user with pre-defined values 
         expect(foundUser.discord_id).toEqual(discord_id);
         expect(foundUser.moodle_token).toEqual(moodle_token);
     })
     it("Should return null if no matching user is found", async () => {
         const discord_id = "3452357445";
         
-        //trying to find user (expecting to return null)
+        //Trying to find user (expecting to return null)
         const foundUser = await fetchUser(discord_id);
 
-        //expecting it to be null, since no user was created
+        //Expecting it to be null, since no user was created
         expect(foundUser).toEqual(null);
     })
 }) 
@@ -93,5 +93,36 @@ describe("Update user", () => {
                 await updateUser(discord_id);
             }).rejects.toThrow(TypeError("Cannot update non-existing user!"))            
         })
+    })
+})
+describe("Delete user", () => {
+    it("Should throw TypeError if no user exists with the given discord id", async () => {
+        const discord_id = "3452357445";
+        
+        await expect(async () => {
+            await deleteUser(discord_id);
+        }).rejects.toThrow(TypeError("User doesn't exist!"));
+    })
+    it("Should delete user if one exists with matching discord id", async () => {
+        const discord_id = "3452357445";
+        const moodle_token = "34ffDSE8439Ujfe8f3jj";
+
+        //Creating user (tested earlier, expecting to work properly)
+        await createUser(discord_id, moodle_token);
+
+        const foundUser = await fetchUser(discord_id);
+
+        //Validating a user was created
+        expect(foundUser.discord_id).toEqual(discord_id);
+        expect(foundUser.moodle_token).toEqual(moodle_token);
+
+        //Trying to delete user
+        await deleteUser(discord_id);
+
+        //Fetching deleted user (returns null)
+        const deletedUser = await fetchUser(discord_id);
+
+        //Expecting to be null, if deleteUser is functioning
+        expect(deletedUser).toEqual(null);
     })
 })

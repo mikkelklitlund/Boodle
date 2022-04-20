@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { default: axios } = require('axios');
 const { MessageEmbed } = require('discord.js');
+const { fetchUser } = require('../../database/manageUserDB');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,11 +11,11 @@ module.exports = {
         //Deferreply cause bot will take longer than 3 secs to respond
         interaction.deferReply();
         
-        await axios.get('http://localhost:3000/users/fetchUser/' + interaction.user.id)
+        await fetchUser(user.interaction.id)
             .then(async (res) => {
                 await axios.get("https://www.moodle.aau.dk/webservice/rest/server.php", {
                     params: {
-                        wstoken: res.data.moodle_token,
+                        wstoken: res.moodle_token,
                         wsfunction: "core_calendar_get_calendar_upcoming_view",
                         moodlewsrestformat: "json"
                     }

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const profileModel = require('./profileSchema');
 
 //Checks if user exists in database, returns info if found and null if not found
@@ -27,10 +28,19 @@ async function updateUser(disc_id, moodle_token) {
     if (!profileData) {
         throw TypeError("Cannot update non-existing user!");
     }
-    
     //Set new moodle token
     profileData.moodle_token = moodle_token;
     await profileData.save();
 }
 
-module.exports = { createUser, updateUser, fetchUser };
+//Deleting user (deleting a document)
+async function deleteUser(disc_id) {
+    const profileData = await fetchUser(disc_id);
+
+    if (!profileData) {
+        throw TypeError("User doesn't exist!");
+    }
+    await profileData.deleteOne({discord_id: disc_id})
+}
+
+module.exports = { createUser, updateUser, fetchUser, deleteUser };
