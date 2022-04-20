@@ -1,6 +1,6 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const encrypt = require('mongoose-encryption');
-require('dotenv').config();
 
 //Keys for encryption and signing
 const encKey = process.env.SOME_32BYTE_BASE64_STRING;
