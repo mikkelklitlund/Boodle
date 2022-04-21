@@ -16,10 +16,10 @@ const { body, validationResult } = require("express-validator");
 
 // TODO: Få createUser til at virke
 // DB related modules
-// const { createUser } = require("../database/manageUserDB");
-
+const { connectDB } = require('../database/connectDB');
+const { createUser } = require("../database/manageUserDB");
 // Creates connection to database
-// connectDB();
+connectDB();
 
 // let moodleToken;
 //explicitly added hostname

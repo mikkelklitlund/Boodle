@@ -1,7 +1,31 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-// const { createUser } = require('../../database/manageUserDB');
+const { createUser, updateUser, fetchUser } = require('../../database/manageUserDB');
+
+
+
+
+function discordIDValidator(discordId) {
+// takes string as input, returns null if not a string, returns true if string contains only regex chars, false otherwise
+  if (typeof(discordId) === "string") {
+    const regex = /^[0-9]*$/; // only chars in discordId
+    if (regex.test(discordId)) return true;
+    else return false;
+  }
+  else return null;
+};
+
+function moodleTokenValidator(moodleToken) {
+// Same as discordIdValidator, but for moodle token with another regex
+  if (typeof(moodleToken) === "string") {
+    const regex = /^[0-9a-f]*$/;
+    if (regex.test(moodleToken)) return true;
+    else return false;
+  }
+  else return null;
+};
+
 
 router.get("/:id/", (req, res) => {
   // Site generated from /setup command
@@ -33,24 +57,33 @@ router.post("/:id/", (req, res) => {
     console.log(
       `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}`
     );
+    let discValRes = discordIDValidator(discordId);
+    let moodleValRes = moodleTokenValidator(MoodleToken);
+    if ((discValRes !== true || !discordId) || (moodleValRes !== true || !MoodleToken)) {
+      res.status('400').send(`Empty or incorrect Discord id and/or moodle token`);
+      return;
+    }
+
     // TODO: Send til DB og check om bruger findes i forvejen
-    // await createUser(discordId, MoodleToken);
-    res.status('201');
-    res.render("webpage.pug", {
-        id: Buffer.from(req.params.id, "base64").toString("utf-8"),
-    });
-    res.end();
+    // console.log(`"${discordId}"`);
+    if ( !await fetchUser(discordId)) {
+        await createUser(discordId, MoodleToken);
+        res.status('201');
+        res.render("webpage.pug", {
+            id: Buffer.from(req.params.id, "base64").toString("utf-8"),
+        });
+    }
+    else res.status('400').send('User already exists');
   });
 });
 
 router.put("/:id", (req, res) => {
-  res.send({
-    body: `PUT method not implemented, user ${Buffer.from(
-      req.params.id,
-      "base64"
-    ).toString("utf-8")} not updated`,
-  });
-  //TBD
+
+    if (fetchUser(discordId)) {
+        updateUser(discordId, MoodleToken);
+    res.status('204').send('User updated');
+    }
+    else res.status('404').send('No such user');
 });
 
 router.delete("/:id", (req, res) => {
