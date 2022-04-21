@@ -79,7 +79,7 @@ router.post("/:id/", (req, res) => {
 
 router.put("/:id", (req, res) => {
 
-    if (!fetchUser(discordId)) {
+    if (fetchUser(discordId)) {
         updateUser(discordId, MoodleToken);
     res.status('204').send('User updated');
     }
