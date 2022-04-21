@@ -7,6 +7,6 @@ module.exports = {
     async execute(interaction) {
         // Converts user id to base64 for url generation
         await interaction.reply({ content: `http://localhost:3090/register/${Buffer.from(interaction.user.id, 'ascii').toString('base64')}/\nPlease follow the link and input your Moodle token`, ephemeral: true});
-        // https://fs-21-sw-2-a219a.p2datsw.cs.aau.dk/node0/
+        // https://fs-21-sw-2-a219a.p2datsw.cs.aau.dk/node0/register/${Buffer.from(interaction.user.id, 'ascii').toString('base64')}
     },
 };
