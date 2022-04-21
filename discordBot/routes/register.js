@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const { createUser, updateUser, fetchUser } = require('../../database/manageUserDB');
+const { createUser, updateUser, fetchUser, deleteUser } = require('../../database/manageUserDB');
 
 
 
@@ -55,7 +55,7 @@ router.post("/:id/", (req, res) => {
     const discordId = body.substring(body.indexOf("=") + 1, body.indexOf("&"));
     const MoodleToken = body.substring(body.lastIndexOf("=") + 1, body.length);
     console.log(
-      `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}`
+      `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}\nBody: ${body}`
     );
     let discValRes = discordIDValidator(discordId);
     let moodleValRes = moodleTokenValidator(MoodleToken);
@@ -68,10 +68,7 @@ router.post("/:id/", (req, res) => {
     // console.log(`"${discordId}"`);
     if ( !await fetchUser(discordId)) {
         await createUser(discordId, MoodleToken);
-        res.status('201');
-        res.render("webpage.pug", {
-            id: Buffer.from(req.params.id, "base64").toString("utf-8"),
-        });
+        res.status('201').send('User Created');
     }
     else res.status('400').send('User already exists');
   });
@@ -86,15 +83,23 @@ router.put("/:id", (req, res) => {
     else res.status('404').send('No such user');
 });
 
-router.delete("/:id", (req, res) => {
-  res.send({
-    body: `DELETE method not implemented, user ${Buffer.from(
-      req.params.id,
-      "base64"
-    ).toString("utf-8")} not deleted`,
-  });
-  // TODO DB delete user
-  //TBD
+router.delete("/:id", async (req, res) => {
+  const discordId = Buffer.from(req.params.id, "base64").toString("utf-8");
+
+  let discordIdValRes = discordIDValidator(discordId); 
+
+  if (!discordId || discordIdValRes !== true) {
+    res.status('400').send(`Empty or incorrect Discord id and/or moodle token`);
+    return;
+  };
+  
+  if ( !await fetchUser(discordId)) {
+    res.status('404').send('No such user');
+  }
+  else {
+    await deleteUser(discordId);
+    res.status('200').send('User deleted succesfully');
+  };
 });
 
 module.exports = router;
