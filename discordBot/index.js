@@ -35,7 +35,7 @@ app.set("view engine", "pug");
 
 // Creates HTTP server
 const server = http.createServer(app).listen(port, hostname, () => {
-  console.log(`Server Running at http://localhost:${port}`);
+  console.log(`Server Running at https://fs-21-sw-2-a219a.p2datsw.cs.aau.dk/node0/`);
 });
 
 // Moves HTTP methods on /register to ./routes/register.js
