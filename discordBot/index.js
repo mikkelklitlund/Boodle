@@ -1,6 +1,6 @@
 // Discord modules
 const fs = require("node:fs");
-require("dotenv").config();
+require("dotenv").config( {path: "../.env"});
 const { Client, Collection, Intents } = require("discord.js");
 
 // HTTP server modules
