@@ -10,7 +10,7 @@ const path = require("path");
 // const { body, validationResult } = require("express-validator");
 // All route modules have CRUD capability, but 
 const registerRoute = require('./routes/register.js');
-const aboutRoute = require('./routes/about.js')
+const aboutRoute = require('./routes/about.js');
 const { body, validationResult } = require("express-validator");
 
 
@@ -33,7 +33,7 @@ app.use("/public", express.static("../website"));
 app.set("views", path.join(process.cwd(), "../website/resources"));
 app.set("view engine", "pug");
 
-// Creates HTTPS server
+// Creates HTTP server
 const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server Running at http://localhost:${port}`);
 });
