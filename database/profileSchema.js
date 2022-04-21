@@ -8,8 +8,8 @@ const sigKey = process.env.SOME_64BYTE_BASE64_STRING;
 
 //Create a new 'Schema' (document in mongoDB) - structure of how each user is saved in the database
 const profileSchema = new mongoose.Schema({
-    discord_id: { type: String, require: true},
-    moodle_token: { type: String, require: true},
+    discord_id: { type: String, required: true},
+    moodle_token: { type: String, required: true},
 },
 {
     timestamps: {
