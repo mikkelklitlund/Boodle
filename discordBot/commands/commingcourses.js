@@ -11,7 +11,7 @@ module.exports = {
         //Deferreply cause bot will take longer than 3 secs to respond
         interaction.deferReply();
         
-        await fetchUser(user.interaction.id)
+        await fetchUser(interaction.user.id)
             .then(async (res) => {
                 await axios.get("https://www.moodle.aau.dk/webservice/rest/server.php", {
                     params: {
