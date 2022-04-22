@@ -6,9 +6,9 @@ const courseid = "41259";
 const moodle_token = "fea55e838143611e65bdaef0a6c1e2b0";
 
 let course = {
+  course_name: [],
   Event: [
     {
-      courseName: [],
       course_description: [],
       course_date_unix: [],
       course_date: [],

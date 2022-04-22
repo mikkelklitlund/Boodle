@@ -44,21 +44,6 @@ async function commingCourses(k) {
 
 commingCourses();
 
-const token = "fea55e838143611e65bdaef0a6c1e2b0"
-
-async function fetch_data(id_array, token) {
-    var options = "https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" + token +  "&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid=" + id_array;
-    
-    fetch(options)
-    .then(req => req.json())
-    .then(json => {
-      for (let i in json){
-       console.log(json[i].summary)
-
-      }
-    }
-    )
-  }
 
 
 function timeConverter(UNIX_timestamp){
