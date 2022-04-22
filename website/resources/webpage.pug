@@ -28,7 +28,13 @@ form(method='post' action='./')
   section#guide
     h2 Guide on how to setup Boodle
   p
-    | Tester
+    | First you'll have to find your personal Moodle token.
+    | Go to Moodle and login, click on your name in the top right corner. <br/> <br/>
+    | Click on preferences in the drop down menu and you will be redirected to a new site.
+    | Under user account you will need to click on security keys. This should redirect you to a new site, in which you can see three different keys.
+    | You'll need to copy the key next to "Moodle mobile web service". <br/>
+    | Paste the key into the input field beneath this guide and press submit.
+    | If done correctly you will see a "user created", and now you can go ahead and try out your new digital tool!   
   .form-group
     label#name-label.name-label(for='name') Moodle token
     input#postDiscordId.form-control(type='text' name='DiscordId' readonly='' value=`${id}`)
