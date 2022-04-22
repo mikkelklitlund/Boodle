@@ -128,18 +128,6 @@ button {
   box-sizing: border-box;
 }
 
-@media (min-width: 576px) {
-  .container {
-    max-width: 540px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 720px;
-  }
-}
-
 /* form */
 form {
   background: var(--color-darkblue-alpha);
@@ -193,17 +181,32 @@ form {
 }
 
 /* Command table */
-table,
-th,
-td {
-  background-color: #ddd;
+table, td, th {
   color: black;
-  border: 1.5px solid;
-  border-radius: 0.5rem;
+  border-collapse: collapse;
   overflow-wrap: break-word;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+}
+
+thead {
+  background-color: var(--color-orange);
+  font-size: 1.2rem;
+}
+
+tbody {
+  text-align: center;
+  font-size: 1rem;
+  font-style: oblique;
+}
+
+tr:nth-child(even) td {
+  background-color:#ddd;
+}
+
+tr:nth-child(odd) td {
+  background-color:#fff;
 }
 
 /* Images */
