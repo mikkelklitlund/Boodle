@@ -114,4 +114,5 @@ router.delete ('/:id', async (req, res) => {
   }
 });
 
-module.exports = {router, discordIDValidator, moodleTokenValidator};
+module.exports = { discordIDValidator, moodleTokenValidator };
+module.exports = router;
