@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const { createUser, updateUser, fetchUser, deleteUser } = require('../../database/manageUserDB');
+const { createUser, updateUser, fetchUser } = require('../../database/manageUserDB');
 
 
 
@@ -29,6 +29,9 @@ function moodleTokenValidator(moodleToken) {
 
 router.get("/:id/", (req, res) => {
   // Site generated from /setup command
+  if (fetchUser(req.params.id)) {
+    res.status("409").send("User already exists");
+  }
   res.render("webpage.pug", {
     id: Buffer.from(req.params.id, "base64").toString("utf-8"),
   });
@@ -55,12 +58,12 @@ router.post("/:id/", (req, res) => {
     const discordId = body.substring(body.indexOf("=") + 1, body.indexOf("&"));
     const MoodleToken = body.substring(body.lastIndexOf("=") + 1, body.length);
     console.log(
-      `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}\nBody: ${body}`
+      `POST request ended: DiscordId: ${discordId} Moodletoken: ${MoodleToken}`
     );
     let discValRes = discordIDValidator(discordId);
     let moodleValRes = moodleTokenValidator(MoodleToken);
     if ((discValRes !== true || !discordId) || (moodleValRes !== true || !MoodleToken)) {
-      res.status('400').send(`Empty or incorrect Discord id and/or moodle token`);
+      res.status('400').send(`Empty and/or incorrect Discord id and/or moodle token`);
       return;
     }
 
@@ -68,7 +71,10 @@ router.post("/:id/", (req, res) => {
     // console.log(`"${discordId}"`);
     if ( !await fetchUser(discordId)) {
         await createUser(discordId, MoodleToken);
-        res.status('201').send('User Created');
+        res.status('201');
+        res.render("webpage.pug", {
+            id: Buffer.from(req.params.id, "base64").toString("utf-8"),
+        });
     }
     else res.status('400').send('User already exists');
   });
