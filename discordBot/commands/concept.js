@@ -6,7 +6,7 @@ const { fetchUser } = require('../../database/manageUserDB');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('newcourses')
-        .setDescription('Tests options feature')
+        .setDescription('displays an amount of upcoming courses equal to the input')
         .addIntegerOption(option =>
             option.setName('input')
                 .setDescription('The amount of next courses to show')
