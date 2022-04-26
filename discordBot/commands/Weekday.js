@@ -1,6 +1,23 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, CommandInteractionOptionResolver } = require("discord.js");
+const {calendarDayView} = require("../../fetchCoursedata/calendarGetDayView.js");
+const {fetchUser} = require("../../database/manageUserDB.js");
 
+function fullDate() {
+    const weekday = ["Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"];
+    const d = new Date();
+    let wday = weekday[d.getDay()];
+    let day = d.getDate();
+    let month = d.getMonth();
+    let year = d.getFullYear();
+
+    return {
+        wday: wday,
+        day: day,
+        month: month,
+        year: year
+    };
+  };
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,8 +34,11 @@ module.exports = {
     .addChoice("friday", "friday")),
     
     async execute(interaction) {
-        // const dinfar = CommandInteractionOptionResolver.getString("weekday");
         await interaction.deferReply();
+        let currentDate = fullDate();
+        let user = fetchUser(interaction.user.id);
+        calendarDayView(user.moodle_token, currentDate.day, currentDate.month, currentDate.year);
+        // const dinfar = CommandInteractionOptionResolver.getString("weekday");
         switch (interaction.options.data[0].value) {
             case "monday":
                 await interaction.editReply('monday');

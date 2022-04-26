@@ -28,7 +28,7 @@ async function calendarDayView(moodleToken, day, month, year) {
               },
               course: json.events[0].course
           };
-          console.log(courseInfo);
+          // console.log(courseInfo);
         })
         // .then(json => console.log(courseInfo))
       .catch((err) => console.log(err));
