@@ -62,6 +62,7 @@ module.exports = {
 				}
 			})
 			.catch(async (err) => {
+				//If fetchUser fails
 				console.log(err);
 				await interaction.reply({ content: "Error occured" });
 			});
