@@ -1,11 +1,13 @@
 const fetch = require('node-fetch');
+const { format } = require('date-fns');
 
+const server = 'https://www.moodle.aau.dk/webservice/rest/server.php?';
+
+format(new Date(2022,4,26), 'yyyy-MM--dd');
+
+console.log(new Date("2022,2,31"));
 
 // fx year=2022, month=4, day=26
-let year,month,day;
-const server = 'https://www.moodle.aau.dk/webservice/rest/server.php?';
-let wstoken;
-
 async function calendarDayView(moodleToken, day, month, year) {
     let requestURL = `${server}wstoken=${moodleToken}&wsfunction=core_calendar_get_calendar_day_view&day=${day}&month=${month}&year=${year}&moodlewsrestformat=json`
     let courseInfo;
@@ -28,13 +30,13 @@ async function calendarDayView(moodleToken, day, month, year) {
               },
               course: json.events[0].course
           };
-          console.log(courseInfo);
+          // console.log(courseInfo);
         })
         // .then(json => console.log(courseInfo))
       .catch((err) => console.log(err));
 
 };
 
-calendarDayView('c4043b1ff4ed72d98f8107586f61e4cb',26,4,2022);
+// calendarDayView('c4043b1ff4ed72d98f8107586f61e4cb',26,4,2022);
 
 module.exports = { calendarDayView }
