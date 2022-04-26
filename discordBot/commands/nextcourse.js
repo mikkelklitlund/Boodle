@@ -29,6 +29,7 @@ module.exports = {
                             title: "next course:",
                             description: `Course: ${res.data.events[0].course.fullname}\nLocation: ${res.data.events[0].location}\nTime: ${timeConverter(res.data.events[0].timestart)}\nLink: ${res.data.events[0].course.viewurl}`
                         })
+                        console.log(res.data.events[0]);
                         //Edit reply to contain coursedata
                         await interaction.editReply({ embeds: [message] });
                     }

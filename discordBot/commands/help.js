@@ -13,6 +13,7 @@ module.exports = {
                 .addChoice('nextcourse', 'nextcourse')
                 .addChoice('user', 'user')
                 .addChoice('server', 'server')
+                .addChoice('weekday', 'weekday')
                 .addChoice('setup', 'setup')),
     async execute(interaction) {
         const message = new MessageEmbed({
@@ -29,10 +30,10 @@ module.exports = {
             case "setup":
                 message.description = "Usage: /setup\nStarts the process of setting up the users data in the database";
                 break;
-            case "Weekday":
+            case "weekday":
                 message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material ";
                 break;
-            case "User":
+            case "user":
             message.description = "Usage: /User\nGets the users info, such as discord id";
                 break;
         }
