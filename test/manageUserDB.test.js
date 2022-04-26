@@ -12,7 +12,7 @@ describe("Create new user", () => {
         const discord_id = "3452357445";
         const moodle_token = "34ffDSE8439Ujfe8f3jj";
         
-        //Creating a new user
+        //Creating a new user 
         await createUser(discord_id, moodle_token);
 
         //Searching for one
@@ -43,10 +43,10 @@ describe("Fetch user", () => {
         const discord_id = "3452357445";
         const moodle_token = "34ffDSE8439Ujfe8f3jj"; 
 
-        //First creating user in db (assuming this works correctly, will be tested later on)
+        //First creating user in db 
         await createUser(discord_id, moodle_token);
 
-        //Trying to fetch the newly created user
+        //Trying to fetch the newly created user 
         const foundUser = await fetchUser(discord_id);
 
         //Compare found user with pre-defined values 
@@ -107,7 +107,7 @@ describe("Delete user", () => {
         const discord_id = "3452357445";
         const moodle_token = "34ffDSE8439Ujfe8f3jj";
 
-        //Creating user (tested earlier, expecting to work properly)
+        //Creating user
         await createUser(discord_id, moodle_token);
 
         const foundUser = await fetchUser(discord_id);
@@ -119,7 +119,7 @@ describe("Delete user", () => {
         //Trying to delete user
         await deleteUser(discord_id);
 
-        //Fetching deleted user (returns null)
+        //Fetching deleted user
         const deletedUser = await fetchUser(discord_id);
 
         //Expecting to be null, if deleteUser is functioning
