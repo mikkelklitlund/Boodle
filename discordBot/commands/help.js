@@ -26,14 +26,14 @@ module.exports = {
             case "nextcourse":
                 message.description = "Usage: /nextcourse\nDisplays the users next course";
                 break;
-            case "user":
-                message.description = "Usage: /user\nReplies to the user with their information";
-                break;
-            case "server":
-                message.description = "Usage: /server\nReplies with information about the server";
-                break;
             case "setup":
                 message.description = "Usage: /setup\nStarts the process of setting up the users data in the database";
+                break;
+            case "Weekday":
+                message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material ";
+                break;
+            case "User":
+            message.description = "Usage: /User\nGets the users info, such as discord id";
                 break;
         }
         interaction.reply({ embeds: [message] });
