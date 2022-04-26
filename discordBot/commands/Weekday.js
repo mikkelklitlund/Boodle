@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { CommandInteraction, CommandInteractionOptionResolver } = require("discord.js");
-const {calendarDayView} = require("../../fetchCoursedata/calendarGetDayView.js");
-const {fetchUser} = require("../../database/manageUserDB.js");
+const { calendarDayView, getNextWday, datePToObj } = require("../../fetchCoursedata/calendarGetDayView.js");
+const { fetchUser } = require("../../database/manageUserDB.js");
+const { date } = require("zod");
+const { throwStatement } = require("@babel/types");
 
 function fullDate() {
     const weekday = ["Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"];
@@ -35,31 +36,47 @@ module.exports = {
     
     async execute(interaction) {
         await interaction.deferReply();
+        let dateOBJ;
         let currentDate = fullDate();
         let user = fetchUser(interaction.user.id);
         calendarDayView(user.moodle_token, currentDate.day, currentDate.month, currentDate.year);
         // const dinfar = CommandInteractionOptionResolver.getString("weekday");
         switch (interaction.options.data[0].value) {
             case "monday":
-                await interaction.editReply('monday');
+                dateOBJ = datePToObj(getNextWday('Monday'));
+                // await interaction.editReply(calendarDayView(tis));
                 break;
             case "tuesday":
-                await interaction.editReply('tuesday');
+                dateOBJ = datePToObj(getNextWday('Tuesday'));
+                // await interaction.editReply('tuesday');
                 break;
             case "wednesday":
-                await interaction.editReply('wednesday');
+                dateOBJ = datePToObj(getNextWday('Wednesday'));
+                // await interaction.editReply('wednesday');
                 break;
             case "thursday":
-                await interaction.editReply('thursday');
+                dateOBJ = datePToObj(getNextWday('Thursday'));
+                // await interaction.editReply('thursday');
                 break;
             case "friday":
-                await interaction.editReply('friday');
+                dateOBJ = datePToObj(getNextWday('Friday'));
+                // await interaction.editReply('friday');
                 break;
             default:
                 console.log(interaction.options.data[0].value);
                 await interaction.editReply('please input a weekday');
                 break;
-        } 
+        }
+        console.log(dateOBJ);
+        calendarDayView('c4043b1ff4ed72d98f8107586f61e4cb',dateOBJ.day,dateOBJ.month,dateOBJ.year)
+        .then(res => JSON.stringify(res))
+        .then(res => {
+            console.log(res);
+            interaction.editReply(res);
+        })
+        .catch(err => console.error(err));
+        // .then( async res => await interaction.editReply(res)); 
+        // await interaction.editReply(calendar);
         }
     }
 
