@@ -40,6 +40,7 @@ async function deleteUser(disc_id) {
     if (!profileData) {
         throw TypeError("User doesn't exist!");
     }
+    //Delete user
     await profileData.deleteOne({discord_id: disc_id})
 }
 
