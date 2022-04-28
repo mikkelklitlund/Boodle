@@ -1,5 +1,4 @@
 const CryptoJS = require("crypto-js");
-const { enc } = require("crypto-js/core");
 require("dotenv").config();
 
 //Encrypt:
