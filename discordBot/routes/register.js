@@ -11,10 +11,11 @@ const {
 	discordIDValidator,
 } = require("../../validation/validation");
 
-router.get("/:id/", (req, res) => {
+router.get("/:id/", async (req, res) => {
 	// Site generated from /setup command
-	if (fetchUser(req.params.id)) {
-		res.status("409").send("User already exists");
+	const profile = await fetchUser(req.params.id);
+	if (profile) {
+		return res.status("409").send("User already exists");
 	}
 	res.render("webpage.pug", {
 		id: Buffer.from(req.params.id, "base64").toString("utf-8"),
@@ -30,7 +31,7 @@ router.post("/:id/", (req, res) => {
 	// Input validation
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		res.status("400").send("Input validation failed");
+		return res.status("400").send("Input validation failed");
 	}
 
 	let body = "";
@@ -60,18 +61,22 @@ router.post("/:id/", (req, res) => {
 
 		// TODO: Send til DB og check om bruger findes i forvejen
 		// console.log(`"${discordId}"`);
-		if (!(await fetchUser(discordId))) {
+		const profile = await fetchUser(discordId);
+		if (!profile) {
 			await createUser(discordId, MoodleToken);
-			res.status("201");
+			return res.status("201").send("User created");
+			/*
 			res.render("webpage.pug", {
 				id: Buffer.from(req.params.id, "base64").toString("utf-8"),
 			});
-		} else res.status("400").send("User already exists");
+			*/
+		} else return res.status("400").send("User already exists");
 	});
 });
 
-router.put("/:id", (req, res) => {
-	if (fetchUser(discordId)) {
+router.put("/:id", async (req, res) => {
+	const profile = await fetchUser(discordId);
+	if (profile) {
 		updateUser(discordId, MoodleToken);
 		res.status("204").send("User updated");
 	} else res.status("404").send("No such user");
@@ -87,7 +92,8 @@ router.delete("/:id", async (req, res) => {
 		return;
 	}
 
-	if (!(await fetchUser(discordId))) {
+	const profile = await fetchUser(discordId);
+	if (!profile) {
 		res.status("404").send("No such user");
 	} else {
 		await deleteUser(discordId);
