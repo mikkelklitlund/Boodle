@@ -1,6 +1,5 @@
 const fetch = require("node-fetch");
 const { format, addDays } = require("date-fns");
-const res = require("express/lib/response");
 
 // Weekdays in EEEE format
 const weekday = [

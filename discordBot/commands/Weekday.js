@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { calendarDayView, getNextWday, datePToObj } = require("../../fetchCoursedata/calendarGetDayView.js");
 const { fetchUser } = require("../../database/manageUserDB.js");
 const { MessageEmbed } = require("discord.js");
+const { format } = require('date-fns');
 
 function fullDate() {
     const weekday = ["Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"];
@@ -78,7 +79,8 @@ module.exports = {
                 let embed = new MessageEmbed({
                     title: element.fullname,
                     url: element.url,
-                    description: element.description
+                    description: `${element.description} \n\t ${format(new Date(element.time.timestart)*1000,'Pp')} ${element.time.timeduration == 1 ? (element.time.timeduration) + 'hour' : (element.time.timeduration / 3600) + ' hours' } `
+                    // timestamp: (element.time.timeduration /1000) + 'seconds'
                 });
                 embedList[i] = embed;
                 console.log(`i=${i}`,embed);
