@@ -16,10 +16,10 @@ module.exports = {
                 .addChoice('setup', 'setup')),
     async execute(interaction) {
         const message = new MessageEmbed({
-            title: `/` + (interaction.options.get("command")),
+            title: `/` + (interaction.options.getString("command")),
             description: ``
         })
-        switch (interaction.options.get("command")) {
+        switch (interaction.options.getString("command")) {
             case "courses":
                 message.description = "Usage: /courses\nDisplays the next 3 courses of the user";
                 break;
@@ -36,7 +36,7 @@ module.exports = {
             message.description = "Usage: /User\nGets the users info, such as discord id";
                 break;
         }
-
+        interaction.reply({ embeds: [message] });
 
     },
 };
