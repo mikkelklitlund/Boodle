@@ -109,7 +109,9 @@ module.exports = {
                 break;
         }
         // console.log(dateOBJ);
-        calendarDayView('c4043b1ff4ed72d98f8107586f61e4cb',dateOBJ.day,dateOBJ.month,dateOBJ.year)
+        fetchUser(interaction.user.id).then(res => {
+            calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year)
+        })
         // .then(res => JSON.stringify(res))
         .then(async res => {
             // console.log(interaction.options.data[0].value);
@@ -124,6 +126,7 @@ module.exports = {
                 // console.log(`tempArr[${i}]= ${tempArr[i]}`);
                 bigField = bigField.concat(tempArr[i]);
             });
+            bigField = bigField.pop();
             // bigField.concat(field);
             // console.log('BIGFIELD BEGIN\n\n'+JSON.stringify(bigField) +'BIGFIELD END\n\n');
             let bigEmbed = new MessageEmbed({
@@ -136,11 +139,5 @@ module.exports = {
            await interaction.editReply({embeds: [bigEmbed]});
         })
         .catch(err => console.error(err));
-        // .then( async res => await interaction.editReply(res)); 
-        // await interaction.editReply(calendar);
         }
     }
-
-  // async execute(interaction) {
-  //     await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
-  // },
