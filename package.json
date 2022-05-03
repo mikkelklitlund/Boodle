@@ -36,7 +36,8 @@
     "jest": "^27.5.1",
     "mongodb-memory-server": "^8.1.4",
     "mongoose": "^6.2.8",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "striptags": "^3.2.0"
   },
   "devDependencies": {
     "eslint": "^8.11.0"
