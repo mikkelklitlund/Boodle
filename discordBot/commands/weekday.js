@@ -104,38 +104,16 @@ module.exports = {
                 // await interaction.editReply('friday');
                 break;
             default:
-                console.log(interaction.options.data[0].value);
+                // console.log(interaction.options.data[0].value);
                 await interaction.editReply('please input a weekday');
                 break;
         }
-        console.log(dateOBJ);
+        // console.log(dateOBJ);
         calendarDayView('c4043b1ff4ed72d98f8107586f61e4cb',dateOBJ.day,dateOBJ.month,dateOBJ.year)
         // .then(res => JSON.stringify(res))
         .then(async res => {
             // console.log(interaction.options.data[0].value);
             // console.log(JSON.stringify(res));
-
-
-            // let embedList = [];
-            // let bigTitle ='', bigUrl ='', bigDescription='';
-            // res.forEach((element, i) => {
-            //     let embed = new MessageEmbed({
-            //         title: element.instanceName,
-            //         url: element.url,
-            //         description: `${element.description} \n\n ${format(new Date(element.time.timestart)*1000,'Pp')} ${element.time.timeduration === 1 ? (element.time.timeduration) + 'hour' : (element.time.timeduration / 3600) + ' hours' } \nLocation: ${element.location} `
-            //         // timestamp: (element.time.timeduration /1000) + 'seconds'
-                    
-            //     });
-            //     bigTitle += element.instanceName + ' ';
-            //     bigDescription += element.instanceName + ' ';
-            //     embedList[i] = embed;
-            //     // console.log(`i=${i}`,embed);
-            // });
-            // let bigEmbed = new MessageEmbed({
-            //     title: bigTitle,
-            //     url: 'https://google.com',
-            //     description: bigDescription
-            // });
             // console.log(bigEmbed);
             let bigField =[];
             res.forEach((element,i) => {
@@ -143,11 +121,11 @@ module.exports = {
                 let tempArr = [];
                 tempArr[i] = field;
                 // console.log(`Value of i=${i}\n ${bigField}`);
-                console.log(`tempArr[${i}]= ${tempArr[i]}`);
+                // console.log(`tempArr[${i}]= ${tempArr[i]}`);
                 bigField = bigField.concat(tempArr[i]);
             });
             // bigField.concat(field);
-            console.log('BIGFIELD BEGIN\n\n'+JSON.stringify(bigField) +'BIGFIELD END\n\n');
+            // console.log('BIGFIELD BEGIN\n\n'+JSON.stringify(bigField) +'BIGFIELD END\n\n');
             let bigEmbed = new MessageEmbed({
                 title: res.length === 1 ? 'Course' : 'Courses',
                 url: 'https://moodle.aau.dk/my/',
