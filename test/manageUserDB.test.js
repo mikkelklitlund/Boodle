@@ -26,6 +26,7 @@ describe("Create new user", () => {
 
 		//Comparing results
 		expect(user.discord_id).toEqual(discord_id);
+		//Using decrypt() tested in another file
 		expect(decrypt(user.moodle_token)).toEqual(moodle_token);
 	});
 	describe("Error when", () => {
