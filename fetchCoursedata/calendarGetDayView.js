@@ -35,7 +35,11 @@ function datePToObj(dateP) {
     ),
   };
 }
-
+/** 
+ * @description Filters unused data from response object 
+ * @param {object} resOBJ
+ * @returns {object}
+ */
 function calendarDayViewOBJFilter(resOBJ) {
   let result = [];
   for (let i = 0; i < resOBJ.events.length; i++) {
@@ -55,9 +59,18 @@ function calendarDayViewOBJFilter(resOBJ) {
     };
   }
   return result;
-}
-
-// fx year=2022, month=4, day=26
+};
+/**
+ * 
+ * @param {string | number} moodleToken The moodle ws token
+ * @param {string | number} day The day to be searched for
+ * @param {string | number} month The month to be searched for
+ * @param {string | number} year the month to be searched for
+ * @returns {object}
+ * @example 
+ * //returns view for 20/4/2022
+ * calendarDayView('123',20,4,2022)
+ */
 async function calendarDayView(moodleToken, day, month, year) {
   let requestURL = `${server}wstoken=${moodleToken}&wsfunction=core_calendar_get_calendar_day_view&day=${day}&month=${month}&year=${year}&moodlewsrestformat=json`;
   // let courseInfo;
