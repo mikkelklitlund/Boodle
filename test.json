@@ -102,3 +102,10 @@
         }
     ]
 }
+
+"<p dir=\"ltr\" style=\"text-align: left;\">
+    <em>v/&nbsp;AUB</em>
+</p>
+<p dir=\"ltr\" style=\"text-align: left;\">
+    <span>Kursus i referencehåndtering</span><br>
+</p>",
