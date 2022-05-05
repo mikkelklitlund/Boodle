@@ -4,9 +4,10 @@ const fetch = require("node-fetch");
 
 let eventsList = [];
 let ListOfIds = [];
-let day = "";
-let month = "";
-let year = "";  
+let token = "fea55e838143611e65bdaef0a6c1e2b0";
+let day = "6";
+let month = "5";
+let year = "2022";  
  
 async function GetCourseIds(token, day, month, year) 
 {
@@ -15,8 +16,9 @@ async function GetCourseIds(token, day, month, year)
         for(let i = 0; i < json.events.length; i++) 
         {
             ListOfIds.push(json.events[i].course.id)
+            
         }
-    
+    console.log(ListOfIds)
     return ListOfIds;
 }
  
@@ -30,11 +32,12 @@ async function fetch_data(id, counter,token)
  
 async function course_module_event(token) 
 {
-    for (let i = 0; i < ListOfIds.length; i++)
+  for(let i = 0; i < ListOfIds.length;i++)
+    for (let j = 0; j < 24; j++)
     {
         const json = await fetch("https://www.moodle.aau.dk/webservice/rest/server.php?wstoken="+token+"&wsfunction=core_calendar_get_calendar_events&moodlewsrestformat=json&events[courseids][0]="+ListOfIds[i]+"&options[timestart]=1640998800&options[timeend]=1656637200")
         .then((req) => req.json())
-        let obj = '{"courseName": "'+json.events[i].name+'", "courseId": "'+json.events[i].courseid+'", "timeUNIX": "'+json.events[i].timestart+'", "courseData": ['+await fetch_data(json.events[i].courseid, i+1,token)+']}';
+        let obj = '{"courseName": "'+json.events[j].name+'", "courseId": "'+json.events[j].courseid+'", "timeUNIX": "'+json.events[j].timestart+'", "courseData": ['+await fetch_data(json.events[j].courseid, j+1,token)+']}';
         eventsList.push(obj);
     }
 }
@@ -47,7 +50,9 @@ async function assembler(token, day, month, year)
  
   let rest = JSON.parse(data)
 
-  return rest;
+  console.log(rest.events)
+  return rest.events;
+
 }
  
 assembler(token, day, month, year);
