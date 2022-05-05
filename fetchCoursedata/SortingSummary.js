@@ -14,8 +14,8 @@ function html_to_string (text) {
 	let startNend = /\[\"|\"\]/gi;
 	result = result.replace(startNend, "");
 
-	let nbspRemove = /<li>/gi;
-	result = result.replace(nbspRemove, " ");
+  let listRemove = /<li>|\\r|\\n/gi;
+	result = result.replace(listRemove, " ");
 
 	let headlineStart = /<h[0-9]>/gi;
 	result = result.replace(headlineStart, "\n\n");
