@@ -1,14 +1,18 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { calendarDayView, getNextWday, datePToObj } = require("../../fetchCoursedata/calendarGetDayView.js");
+const {
+	calendarDayView,
+	getNextWday,
+	datePToObj,
+} = require("../../fetchCoursedata/calendarGetDayView.js");
 const { fetchUser } = require("../../database/manageUserDB.js");
 const { MessageEmbed } = require("discord.js");
-const { format } = require('date-fns');
+const { format } = require("date-fns");
 const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
 const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
 
 /**
  * @typedef customEmbedField
- * @type {object} 
+ * @type {object}
  * @property {string} title The title of the Moodle event
  * @property {string} description The description of the Moodle event
  * @property {location} location The location of the Moodle event
@@ -94,20 +98,22 @@ class customEmbedField {
     }
 };
 function fullDate() {
-    const weekday = ["Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"];
-    const d = new Date();
-    let wday = weekday[d.getDay()];
-    let day = d.getDate();
-    let month = d.getMonth();
-    let year = d.getFullYear();
+	const weekday = [
+		"Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday",
+	];
+	const d = new Date();
+	let wday = weekday[d.getDay()];
+	let day = d.getDate();
+	let month = d.getMonth();
+	let year = d.getFullYear();
 
-    return {
-        wday: wday,
-        day: day,
-        month: month,
-        year: year
-    };
-  };
+	return {
+		wday: wday,
+		day: day,
+		month: month,
+		year: year,
+	};
+}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -165,7 +171,7 @@ module.exports = {
         .then(async res => {
             let bigField =[];
             res.forEach((element,i) => {
-                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url,html_to_string(summary.events[i].courseData)).fieldEmbedifier();
+                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url,html_to_string(JSON.stringify(summary.events[0].courseData)))).fieldEmbedifier();
                 let tempArr = [];
                 tempArr[i] = field;
                 bigField = bigField.concat(tempArr[i]);
