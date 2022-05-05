@@ -10,6 +10,17 @@ const { format } = require("date-fns");
 const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
 const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
 
+/**
+ * @typedef customEmbedField
+ * @type {object}
+ * @property {string} title The title of the Moodle event
+ * @property {string} description The description of the Moodle event
+ * @property {location} location The location of the Moodle event
+ * @property {object} time The timestart and timeduration of the Moodle event
+ * @property {string} courseName The coursename of the Moodle event
+ * @property {string} url The url of the Moodle event
+ * @property {string} summary The summary of the Moodle event
+ */
 class customEmbedField {
 	constructor(title, description, location, time, courseName, url, summary) {
 		this.title = title || "Title";
