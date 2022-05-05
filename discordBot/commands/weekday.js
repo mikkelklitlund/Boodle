@@ -3,6 +3,8 @@ const { calendarDayView, getNextWday, datePToObj } = require("../../fetchCoursed
 const { fetchUser } = require("../../database/manageUserDB.js");
 const { MessageEmbed } = require("discord.js");
 const { format } = require('date-fns');
+const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
+const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
 
 /**
  * @typedef customEmbedField
@@ -135,13 +137,16 @@ module.exports = {
                 await interaction.editReply('please input a weekday');
                 break;
         }
+        // console.log(dateOBJ);
+        let summary;
         fetchUser(interaction.user.id).then(res => {
-            calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year);
+            summary = assembler(res.moodle_token, dateOBJ.day, dateOBJ.month, dateOBJ.year);
+            return calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year)
         })
         .then(async res => {
             let bigField =[];
             res.forEach((element,i) => {
-                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url).fieldEmbedifier();
+                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url,html_to_string(summary.events[i].courseData)).fieldEmbedifier();
                 let tempArr = [];
                 tempArr[i] = field;
                 bigField = bigField.concat(tempArr[i]);
