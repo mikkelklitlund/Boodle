@@ -2,10 +2,8 @@ const { connectDB } = require('../database/connectDB');
 const { fetchUser } = require('../database/manageUserDB');
 const fetch = require("node-fetch");
 
-connectDB();
 let eventsList = [];
 let ListOfIds = [];
-let token = "";
 let day = "";
 let month = "";
 let year = "";  
@@ -49,7 +47,7 @@ async function assembler(token, day, month, year)
  
   let rest = JSON.parse(data)
 
-  console.log(rest);
+  return rest;
 }
  
 assembler(token, day, month, year);

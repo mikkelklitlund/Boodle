@@ -3,15 +3,18 @@ const { calendarDayView, getNextWday, datePToObj } = require("../../fetchCoursed
 const { fetchUser } = require("../../database/manageUserDB.js");
 const { MessageEmbed } = require("discord.js");
 const { format } = require('date-fns');
+const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
+const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
 
 class customEmbedField {
-    constructor(title, description, location,time,courseName, url){
+    constructor(title, description, location,time,courseName, url,summary){
         this.title = title || 'Title'
         this.description = description || 'No description available';
         this.time = time || {timestart: 0, timeduration: 1};
         this.courseName = courseName || 'Course';
         this.url = url || '';
         this.location = location || '';
+        this.summary = summary || '';
     };
     fieldEmbedifier() {
         return [
@@ -33,6 +36,11 @@ class customEmbedField {
             {
                 name: 'Description',
                 value: this.description + `\n${this.url}`,
+                inline: false
+            },
+            {
+                name: 'summary',
+                value: this.summary,
                 inline: false
             },
             {
@@ -109,8 +117,10 @@ module.exports = {
                 break;
         }
         // console.log(dateOBJ);
+        let summary;
         fetchUser(interaction.user.id).then(res => {
-            calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year)
+            summary = assembler(res.moodle_token, dateOBJ.day, dateOBJ.month, dateOBJ.year);
+            return calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year)
         })
         // .then(res => JSON.stringify(res))
         .then(async res => {
@@ -119,7 +129,7 @@ module.exports = {
             // console.log(bigEmbed);
             let bigField =[];
             res.forEach((element,i) => {
-                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url).fieldEmbedifier();
+                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url,html_to_string(summary.events[i].courseData)).fieldEmbedifier();
                 let tempArr = [];
                 tempArr[i] = field;
                 // console.log(`Value of i=${i}\n ${bigField}`);
