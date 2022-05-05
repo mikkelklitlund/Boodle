@@ -7,6 +7,7 @@ const string5 =
 
 const string4 = '<p>Replace HTML linebreak <br> to JS linebreak</p>';
 function html_to_string (text) {
+  if (typeof text !== 'string') return false;
   let newline = /<\/li>|<\/h[0-9]>|<br>|<span[^>]*>/gi;
   let result = text.replace (newline, '\n');
 

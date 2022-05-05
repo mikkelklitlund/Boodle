@@ -45,7 +45,19 @@ class customEmbedField {
      * @returns {array} 
      */
     fieldEmbedifier() {
-        return [
+        // let summaryLen = this.summary.length % 1024;
+        let emptyLine = {
+            name: '\u200b',
+            value: '\u200b',
+            inline: false
+        };
+        let summarySplit = [];
+        let offset = 0;
+        for (let i = 0; i <= Math.floor(this.summary.length / 1024); i++) {
+            summarySplit[i] = this.summary.substring(offset,offset+1023);
+        };
+
+        let res = [
             {
                 name: this.courseName,
                 value: this.title,
@@ -71,12 +83,14 @@ class customEmbedField {
                 value: this.summary,
                 inline:false
             },
-            {
-                name: '\u200b',
-                value: '\u200b',
-                inline: false
-            }
+            // {
+            //     name: '\u200b',
+            //     value: '\u200b',
+            //     inline: false
+            // }
         ];
+        res = res.concat(summarySplit,emptyLine);
+        return res;
     }
 };
 function fullDate() {
@@ -139,9 +153,14 @@ module.exports = {
         }
         // console.log(dateOBJ);
         let summary;
-        fetchUser(interaction.user.id).then(res => {
-            summary = assembler(res.moodle_token, dateOBJ.day, dateOBJ.month, dateOBJ.year);
-            return calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year)
+        fetchUser(interaction.user.id).then(async res => {
+            if (!res) {
+               await interaction.editReply('No moodle token found');
+            }
+            else {
+                summary = await assembler(res.moodle_token, dateOBJ.day, dateOBJ.month, dateOBJ.year);
+                return calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year);
+            }
         })
         .then(async res => {
             let bigField =[];

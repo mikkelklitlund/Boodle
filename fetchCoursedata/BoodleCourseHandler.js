@@ -50,7 +50,7 @@ async function assembler(token, day, month, year)
   return rest;
 }
  
-assembler(token, day, month, year);
+// assembler(token, day, month, year);
  
 module.exports = {assembler}
 
