@@ -5,18 +5,29 @@ const { MessageEmbed } = require("discord.js");
 const { format } = require('date-fns');
 
 /**
- * Fields for MessageEmbed class
-
- * @param {string} title The title or name of the Moodle event
- * @param {string} description The description of Moodle event 
- * @param {string} location The location of the Moodle event
- * @param {object} time The timestart and timeduratino of the Moodle event
- * @param {string} courseName The coursename of the Moodle event
- * @param {string} url The url of the Moodle event
- * @param {string} summary The summary of the Moodle event
+ * @typedef customEmbedField
+ * @type {object} 
+ * @property {string} title The title of the Moodle event
+ * @property {string} description The description of the Moodle event
+ * @property {location} location The location of the Moodle event
+ * @property {object} time The timestart and timeduration of the Moodle event
+ * @property {string} courseName The coursename of the Moodle event
+ * @property {string} url The url of the Moodle event
+ * @property {string} summary The summary of the Moodle event
  */
 class customEmbedField {
     // called when making new instance of customEmbedField (e.g new customEmbedField(...))
+    /**
+     * Fields for MessageEmbed class
+    
+     * @param {string} title The title or name of the Moodle event
+     * @param {string} description The description of Moodle event 
+     * @param {string} location The location of the Moodle event
+     * @param {object} time The timestart and timeduration of the Moodle event
+     * @param {string} courseName The coursename of the Moodle event
+     * @param {string} url The url of the Moodle event
+     * @param {string} summary The summary of the Moodle event
+     */
     constructor(title, description, location,time,courseName, url, summary){
         this.title = title || 'Title'
         this.description = description || 'No description available';
@@ -27,7 +38,10 @@ class customEmbedField {
         this.summary = summary || 'N/A'
     };
     // Method that generates array of objects using this instance values
-    
+    /**
+     * 
+     * @returns {array} 
+     */
     fieldEmbedifier() {
         return [
             {
@@ -122,7 +136,7 @@ module.exports = {
                 break;
         }
         fetchUser(interaction.user.id).then(res => {
-            calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year)
+            calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year);
         })
         .then(async res => {
             let bigField =[];
