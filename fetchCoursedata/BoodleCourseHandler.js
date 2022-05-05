@@ -5,6 +5,44 @@ const { da } = require("date-fns/locale");
 
 let eventsList = [];
 let ListOfIds = [];
+
+let token = "fea55e838143611e65bdaef0a6c1e2b0";
+let day = "6";
+let month = "5";
+let year = "2022";  
+ 
+async function GetCourseIds(token, day, month, year) 
+{
+    const json = await fetch("https://www.moodle.aau.dk/webservice/rest/server.php?wstoken="+token+"&wsfunction=core_calendar_get_calendar_day_view&day=" + day + "&year=" + year + "&month=" + month +"&moodlewsrestformat=json")
+    .then((req) => req.json())
+        for(let i = 0; i < json.events.length; i++) 
+        {
+            ListOfIds.push(json.events[i].course.id)
+            
+        }
+    console.log(ListOfIds)
+    return ListOfIds;
+}
+ 
+async function fetch_data(id, counter,token) 
+{
+    let json = await fetch("https://www.moodle.aau.dk/webservice/rest/server.php?wstoken="+token+"&wsfunction=core_course_get_contents&moodlewsrestformat=json&courseid="+id+"")
+    .then((req) => req.json())
+    
+    return JSON.stringify(json[counter].summary);
+}
+ 
+async function course_module_event(token) 
+{
+  for(let i = 0; i < ListOfIds.length;i++)
+    for (let j = 0; j < 24; j++)
+    {
+        const json = await fetch("https://www.moodle.aau.dk/webservice/rest/server.php?wstoken="+token+"&wsfunction=core_calendar_get_calendar_events&moodlewsrestformat=json&events[courseids][0]="+ListOfIds[i]+"&options[timestart]=1640998800&options[timeend]=1656637200")
+        .then((req) => req.json())
+        let obj = '{"courseName": "'+json.events[j].name+'", "courseId": "'+json.events[j].courseid+'", "timeUNIX": "'+json.events[j].timestart+'", "courseData": ['+await fetch_data(json.events[j].courseid, j+1,token)+']}';
+        eventsList.push(obj);
+    }
+
 let day = "";
 let month = "";
 let year = "";
@@ -37,6 +75,7 @@ async function fetch_data(id, counter, token) {
 			""
 	).then((req) => req.json());
 	return JSON.stringify(json[counter].summary);
+
 }
 
 async function course_module_event(token) {
@@ -65,6 +104,11 @@ async function assembler(token, day, month, year) {
 	await GetCourseIds(token, day, month, year);
 	await course_module_event(token);
 	let data = '{"events": [' + eventsList + "]}";
+
+
+  console.log(rest.events)
+  return rest.events;
+
 
 	let rest = JSON.parse(data);
 	return rest;
