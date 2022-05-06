@@ -57,8 +57,13 @@ class customEmbedField {
         };
         let summarySplit = [];
         let offset = 0;
-        for (let i = 0; i <= Math.floor(this.summary.length / 1024); i++) {
-            summarySplit[i] = this.summary.substring(offset,offset+1023);
+        for (let i = 0; i <= Math.floor(this.summary.length / 900); i++) {
+            summarySplit[i] = {
+                name: `Summary ${i+1}`,
+                value: this.summary.substring(offset,offset+899),
+                inline: false
+            };
+            offset += 899;
         };
 
         let res = [
@@ -82,11 +87,11 @@ class customEmbedField {
                 value: this.description + `\n${this.url}`,
                 inline: false
             },
-            {
-                name: 'Summary',
-                value: this.summary,
-                inline:false
-            },
+            // {
+            //     name: 'Summary',
+            //     value: this.summary,
+            //     inline:false
+            // },
             // {
             //     name: '\u200b',
             //     value: '\u200b',
@@ -165,18 +170,19 @@ module.exports = {
             }
             else {
                 summary = await assembler(res.moodle_token, dateOBJ.day, dateOBJ.month, dateOBJ.year);
+                console.log(summary);
                 return calendarDayView(res.moodle_token,dateOBJ.day,dateOBJ.month,dateOBJ.year);
             }
         })
         .then(async res => {
             let bigField =[];
             res.forEach((element,i) => {
-                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url,html_to_string(JSON.stringify(summary.events[0].courseData)))).fieldEmbedifier();
+                let field = new customEmbedField(element.instanceName, element.description, element.location,element.time,element.fullname,element.url,html_to_string(JSON.stringify(summary.events[0].courseData))).fieldEmbedifier();
                 let tempArr = [];
                 tempArr[i] = field;
                 bigField = bigField.concat(tempArr[i]);
             });
-            bigField = bigField.pop();
+            bigField.pop();
             let bigEmbed = new MessageEmbed({
                 title: res.length === 1 ? 'Course' : 'Courses',
                 url: 'https://moodle.aau.dk/my/',
