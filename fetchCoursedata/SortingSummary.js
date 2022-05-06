@@ -35,7 +35,7 @@ and ending of the string*/
 	return $(result).text().trim();
 }
 
-console.log(html_to_string(text));
+// console.log(html_to_string(text));
 /*this makes it so we can use the function in other documents*/
 module.exports = {html_to_string};
 
