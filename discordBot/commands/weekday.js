@@ -86,17 +86,7 @@ class customEmbedField {
                 name: 'Description',
                 value: this.description + `\n${this.url}`,
                 inline: false
-            },
-            // {
-            //     name: 'Summary',
-            //     value: this.summary,
-            //     inline:false
-            // },
-            // {
-            //     name: '\u200b',
-            //     value: '\u200b',
-            //     inline: false
-            // }
+            }
         ];
         res = res.concat(summarySplit,emptyLine);
         return res;
