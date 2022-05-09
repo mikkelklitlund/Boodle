@@ -97,23 +97,6 @@ class customEmbedField {
 		return res;
 	}
 }
-function fullDate() {
-	const weekday = [
-		"Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
-	];
-	const d = new Date();
-	let wday = weekday[d.getDay()];
-	let day = d.getDate();
-	let month = d.getMonth();
-	let year = d.getFullYear();
-
-	return {
-		wday: wday,
-		day: day,
-		month: month,
-		year: year
-	};
-}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -134,11 +117,7 @@ module.exports = {
 	async execute(interaction) {
 		await interaction.deferReply();
 		let dateOBJ;
-		// let currentDate = fullDate();
-		// TODO Ryd op
-		// let user = fetchUser(interaction.user.id);
-		// calendarDayView(user.moodle_token, currentDate.day, currentDate.month, currentDate.year);
-		// const dinfar = CommandInteractionOptionResolver.getString("weekday");
+
 		switch (interaction.options.data[0].value) {
 			case "monday":
 				dateOBJ = datePToObj(getNextWday("Monday"));
@@ -159,7 +138,7 @@ module.exports = {
 				await interaction.editReply("please input a weekday");
 				break;
 		}
-		// console.log(dateOBJ);
+
 		let summary;
 		await fetchUser(interaction.user.id)
 			.then(async (res) => {
@@ -183,18 +162,18 @@ module.exports = {
 			.then(async (res) => {
 				let bigField = [];
 				let nextModule = syncModules(summary);
-				console.log(nextModule);
-				//console.log(res);
 				res.forEach((element, i) => {
 					let field = new customEmbedField(
 						element.instanceName,
-						element.description,
+						html_to_string(
+							JSON.stringify(element.description)
+						) /* element.description */,
 						element.location,
 						element.time,
 						element.fullname,
 						element.url,
 						html_to_string(
-							JSON.stringify(summary.events[nextModule].courseData)
+							JSON.stringify(summary[i].events[nextModule[i]].courseData)
 						)
 					).fieldEmbedifier();
 					let tempArr = [];

@@ -40,68 +40,88 @@ async function fetch_data(id, token) {
 	return json;
 }
 
-async function course_module_event(token, ListOfIds) {
+async function course_module_event(token, Id) {
 	let eventsList = [];
-	for (let i = 0; i < ListOfIds.length; i++) {
-		const json = await fetch(
-			"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
-				token +
-				"&wsfunction=core_calendar_get_calendar_events&moodlewsrestformat=json&events[courseids][0]=" +
-				ListOfIds[i] +
-				"&options[timestart]=1640998800&options[timeend]=1656637200"
-		).then((req) => req.json());
-		//Endnu et forloop her, iterere over json.events
-		let summary = await fetch_data(json.events[i].courseid, token);
+	const json = await fetch(
+		"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
+			token +
+			"&wsfunction=core_calendar_get_calendar_events&moodlewsrestformat=json&events[courseids][0]=" +
+			Id +
+			"&options[timestart]=1640998800&options[timeend]=1656637200"
+	).then((req) => req.json());
+	//Endnu et forloop her, iterere over json.events
+	let summary = await fetch_data(Id, token);
 
-		for (let j = 0; j < json.events.length; j++) {
-			let obj =
-				'{"courseName": "' +
-				json.events[j].name +
-				'", "courseId": "' +
-				json.events[j].courseid +
-				'", "timeUNIX": "' +
-				json.events[j].timestart;
+	for (let j = 0; j < json.events.length; j++) {
+		let obj =
+			'{"courseName": "' +
+			json.events[j].name +
+			'", "courseId": "' +
+			json.events[j].courseid +
+			'", "timeUNIX": "' +
+			json.events[j].timestart;
 
-			let date = new Date(json.events[j].timestart * 1000);
+		let date = new Date(json.events[j].timestart * 1000);
+		let year = date.getFullYear();
+		let month = date.getMonth();
+		let day = date.getDate();
+		let currentModule = day + " " + month + " " + year;
+
+		let previousModule = 0;
+
+		if (j !== 0) {
+			let date = new Date(json.events[j - 1].timestart * 1000);
 			let year = date.getFullYear();
 			let month = date.getMonth();
 			let day = date.getDate();
-			let currentModule = day + " " + month + " " + year;
-
-			let previousModule = 0;
-
-			if (j !== 0) {
-				let date = new Date(json.events[j - 1].timestart * 1000);
-				let year = date.getFullYear();
-				let month = date.getMonth();
-				let day = date.getDate();
-				previousModule = day + " " + month + " " + year;
-			}
-
-			if (
-				previousModule !== currentModule &&
-				summary[j + 1].summary !== false
-			) {
-				obj +=
-					'", "courseData": [' + JSON.stringify(summary[j + 1].summary) + "]}";
-			} else if (
-				previousModule !== currentModule &&
-				summary[j + 1].summary === false
-			) {
-				obj += '", "courseData": [' + "N/A" + "]}";
-			} else {
-				obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
-			}
-			eventsList.push(obj);
+			previousModule = day + " " + month + " " + year;
 		}
+
+		if (typeof summary[j] == "undefined" || summary[j].summary == false) {
+			obj += '", "courseData": [' + '"N/A"' + "]}";
+		} else if (
+			previousModule !== currentModule &&
+			summary[j].summary !== false
+		) {
+			obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
+		} else {
+			obj +=
+				'", "courseData": [' + JSON.stringify(summary[j - 1].summary) + "]}";
+		}
+		eventsList.push(obj);
 	}
+
 	return eventsList;
 }
 
 async function assembler(token, day, month, year) {
 	let idList = await GetCourseIds(token, day, month, year);
-	let eventsList = await course_module_event(token, idList);
-	let data = '{"events": [' + eventsList + "]}";
+
+	let uniqueIds = idList.filter((v, i, a) => a.indexOf(v) === i);
+
+	let data = "[";
+
+	for (let i = 0; i < uniqueIds.length; i++) {
+		let eventList = await course_module_event(token, idList[i]);
+		data += '{"events": [' + eventList + "]}";
+		if (i !== uniqueIds.length - 1) {
+			data += ",";
+		}
+	}
+
+	data += "]";
+	//For each unique id in id list:
+
+	// let eventList = await course_module_event(token, idList[i])
+	// let data += '{"events": [' + eventList + "]}"
+
+	// if(i - 1 !== idList.length) {
+	//    data += ","; }
+
+	//Next id - repeat
+
+	//let eventsList = await course_module_event(token, idList);
+	//let data = '{"events": [' + eventsList + "]}";
 
 	let rest = JSON.parse(data);
 	return rest;
