@@ -1,7 +1,4 @@
-const { connectDB } = require("../database/connectDB");
-const { fetchUser } = require("../database/manageUserDB");
 const fetch = require("node-fetch");
-const { da } = require("date-fns/locale");
 
 // let ListOfIds = [];
 let day = "";
@@ -110,18 +107,6 @@ async function assembler(token, day, month, year) {
 	}
 
 	data += "]";
-	//For each unique id in id list:
-
-	// let eventList = await course_module_event(token, idList[i])
-	// let data += '{"events": [' + eventList + "]}"
-
-	// if(i - 1 !== idList.length) {
-	//    data += ","; }
-
-	//Next id - repeat
-
-	//let eventsList = await course_module_event(token, idList);
-	//let data = '{"events": [' + eventsList + "]}";
 
 	let rest = JSON.parse(data);
 	return rest;

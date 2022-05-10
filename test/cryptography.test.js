@@ -1,4 +1,4 @@
-const { encrypt, decrypt } = require("../validation/cryptography");
+const { encrypt, decrypt } = require("../helpers/cryptography");
 
 test("Moodle token encryption", () => {
 	const moodleToken = "aklej434tin23faofpov89";
