@@ -1,4 +1,5 @@
-const {html_to_string} = require ('../fetchCoursedata/SortingSummary');
+const { html_to_string } = require("../fetchCoursedata/SortingSummary");
+
 
 test ('HTML to JavaScript', () => {
   /* Checks if it is not a string */

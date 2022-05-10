@@ -9,7 +9,7 @@ const { MessageEmbed } = require("discord.js");
 const { format } = require("date-fns");
 const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
 const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
-const { syncModules } = require("../../validation/syncModules");
+const { syncModules } = require("../../helpers/syncModules");
 
 /**
  * @typedef customEmbedField
