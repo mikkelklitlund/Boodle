@@ -1,6 +1,6 @@
 const { JSDOM } = require("jsdom");
 const { window } = new JSDOM("");
-const $ = require("jquery")(window); // @param body
+const $ = require("jquery")(window); 
 
 
 const text =

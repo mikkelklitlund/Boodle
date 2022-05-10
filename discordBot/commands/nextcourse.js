@@ -43,6 +43,11 @@ module.exports = {
     }
 };
 
+/**
+ * 
+ * @param {number} UNIX_timestamp Unix timestamp
+ * @returns {string} the date from the timestamp
+ */
 function timeConverter(UNIX_timestamp){
   let a = new Date(UNIX_timestamp * 1000);
   let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
