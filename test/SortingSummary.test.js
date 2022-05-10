@@ -1,6 +1,9 @@
 const {html_to_string} = require ('../fetchCoursedata/SortingSummary');
 
 test ('HTML to JavaScript', () => {
+  /* Checks if it is not a string */
+  const stringcheck = 2302;
+  expect (html_to_string (stringcheck)).toEqual (false);
   /* HTML linebreak to JS linebreak */
   const linebreak = '<p>Replace HTML linebreak <br> to JS linebreak</p>';
   expect (html_to_string (linebreak)).toEqual (
@@ -14,7 +17,7 @@ test ('HTML to JavaScript', () => {
   expect (html_to_string (amp)).toEqual ('HTML & JavaScript');
   /* Change list to whitespace */
   const list = '<p>blabla<li>blabla</li></p>';
-  expect (html_to_string (list)).toEqual ('blabla blabla');
+  expect (html_to_string (list)).toEqual ('blablablabla');
   /* Removes double whitespace */
   const doublewhitespaces = '<p>Remove      double    whitespace</p>';
   expect (html_to_string (doublewhitespaces)).toEqual (
@@ -27,5 +30,11 @@ test ('HTML to JavaScript', () => {
   const trimstring = ' <p>Remove whitespace in start and end</p> ';
   expect (html_to_string (trimstring)).toEqual (
     'Remove whitespace in start and end'
+  );
+  /* Remove question marks */
+  const qmark =
+    '"This removes questionmarks in "the beginning" and end but not in the middle"';
+  expect (html_to_string (qmark)).toEqual (
+    'This removes questionmarks in "the beginning" and end but not in the middle'
   );
 });
