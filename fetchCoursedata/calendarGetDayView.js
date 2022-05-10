@@ -40,6 +40,7 @@ function getNextWday(target) {
 		// console.log(i);
 	}
 }
+
 /**
  * @function
  * @param {string} dateP The formatted date string, in date-fns P format
@@ -52,6 +53,7 @@ function datePToObj(dateP) {
 		parseInt(dateP.substring(dateP.lastIndexOf("/") + 1, dateP.length))
 	);
 }
+
 /**
  * @description Filters unused data from response object
  * @param {object} resOBJ
@@ -70,12 +72,13 @@ function calendarDayViewOBJFilter(resOBJ) {
 			time: {
 				timestart: resOBJ.events[i].timestart,
 				timeduration: resOBJ.events[i].timeduration,
-				timemodified: resOBJ.events[i].timemodified,
-			},
+				timemodified: resOBJ.events[i].timemodified
+			}
 		};
 	}
 	return result;
 }
+
 /**
  *
  * @param {(string | number)} moodleToken The moodle ws token
@@ -89,41 +92,15 @@ function calendarDayViewOBJFilter(resOBJ) {
  */
 async function calendarDayView(moodleToken, day, month, year) {
 	let requestURL = `${server}wstoken=${moodleToken}&wsfunction=core_calendar_get_calendar_day_view&day=${day}&month=${month}&year=${year}&moodlewsrestformat=json`;
-	// let courseInfo;
 	// Response obejct can be found at https://www.moodle.aau.dk/user/managetoken.php -> Moodle mobile web service documentation -> core_calendar_get_calendar_day_view
 	console.log(requestURL);
 	let data = await fetch(requestURL)
 		.then(async (req) => await req.json())
 		.then((json) => {
-			//   delete json.filter_selector;
-			//   delete json.events[0].course.viewurl;
-			//   delete json.events[0].course.courseimage;
-			//   console.log(json.events.length);
-			//   console.log(json);
-			// console.log(json.events[0])
-			//   courseInfo = {
-			//     id: json.events[0].id,
-			//     instanceName: json.events[0].name,
-			//     description: json.events[0].description,
-			//     location: json.events[0].location,
-			//     time: {
-			//       timestart: json.events[0].timestart,
-			//       timeduration: json.events[0].timeduration,
-			//       timemodified: json.events[0].timemodified,
-			//     },
-			//     course: json.events[0].course,
-			//   };
-			// console.log(courseInfo);
 			return calendarDayViewOBJFilter(json);
 		})
-		// .then(json => {return json})
 		.catch((err) => console.log(err));
 	return data;
 }
 
-// calendarDayView("c4043b1ff4ed72d98f8107586f61e4cb", 4, 5, 2022).then((res) =>
-//   console.log(res[0])
-// );
-// console.log(getNextWday('Thursday'));
-// console.log(datePToObj(getNextWday('Thursday')));
 module.exports = { calendarDayView, getNextWday, datePToObj };

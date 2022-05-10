@@ -1,10 +1,5 @@
 const fetch = require("node-fetch");
 
-// let ListOfIds = [];
-let day = "";
-let month = "";
-let year = "";
-
 async function GetCourseIds(token, day, month, year) {
 	let tempArr = [];
 	const json = await fetch(
