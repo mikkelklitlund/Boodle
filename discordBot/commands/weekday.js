@@ -47,7 +47,7 @@ class customEmbedField {
 	// Method that generates array of objects using this instance values
 	/**
 	 *
-	 * @returns {array}
+	 * @returns {array} Array of Embed fields with course material inside
 	 */
 	fieldEmbedifier() {
 		// let summaryLen = this.summary.length % 1024;

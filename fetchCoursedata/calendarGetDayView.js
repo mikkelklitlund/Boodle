@@ -37,12 +37,10 @@ function getNextWday(target) {
 			return format(addDays(today, i), "P");
 		}
 		i++;
-		// console.log(i);
 	}
 }
 
 /**
- * @function
  * @param {string} dateP The formatted date string, in date-fns P format
  * @returns {localizeddate} Object containing  day, month and year
  */

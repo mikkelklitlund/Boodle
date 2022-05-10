@@ -1,5 +1,13 @@
 const fetch = require("node-fetch");
 
+/**
+ *
+ * @param {string} token Moodle ws token
+ * @param {string} day The day
+ * @param {string} month The month
+ * @param {string} year The year
+ * @returns {array} Array of course id
+ */
 async function GetCourseIds(token, day, month, year) {
 	let tempArr = [];
 	const json = await fetch(
@@ -20,7 +28,12 @@ async function GetCourseIds(token, day, month, year) {
 	// return ListOfIds;
 	return tempArr;
 }
-
+/**
+ *
+ * @param {string} id The Moodle course id
+ * @param {string} token The Moodle ws token
+ * @returns {object} JSON object containing course contents
+ */
 async function fetch_data(id, token) {
 	let json = await fetch(
 		"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
@@ -32,6 +45,12 @@ async function fetch_data(id, token) {
 	return json;
 }
 
+/**
+ *
+ * @param {string} token The Moodle ws token
+ * @param {string} Id The Moodle course
+ * @returns {array} Array of objects containing name, courseid and timestart
+ */
 async function course_module_event(token, Id) {
 	let eventsList = [];
 	const json = await fetch(
@@ -86,6 +105,14 @@ async function course_module_event(token, Id) {
 	return eventsList;
 }
 
+/**
+ *
+ * @param {string} token The Moodle ws token
+ * @param {string} day The day to be searched
+ * @param {string} month The month to be searched
+ * @param {string} year The year to be searched
+ * @returns {array} Array with each index representing
+ */
 async function assembler(token, day, month, year) {
 	let idList = await GetCourseIds(token, day, month, year);
 
