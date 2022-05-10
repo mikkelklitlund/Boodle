@@ -8,9 +8,9 @@ const $ = require("jquery")(window); // @param body
  * @returns {string} Same string without html elements.
  */
 function html_to_string(text) {
-	/*the newline regex variable, basically makes sure that we replace all the html elemnts in line 10 with \n newline.
-	This also includes a newline underneeth a header. */
 	if (typeof text !== "string") return false;
+  /*the newline regex variable, basically makes sure that we replace all the html elemnts in line 10 with \n newline.
+	This also includes a newline underneeth a header. */
 	let newline = /<\/li>|<\/h[0-9]>|<br[^>]*>|<span[^>]*>/gi;
 	let result = text.replace(newline, "\n");
 	/* This removes the list start with an empty string, to remove it*/
@@ -22,7 +22,7 @@ function html_to_string(text) {
 	/*This removes double whitespaces and double tabulars and so on*/
 	let whitespace = /[ \t]{2,}/gi;
 
-	result = result.replace(whitespace, "");
+	result = result.replace(whitespace, " ");
 
 	/* This removes the start and end of the string, so that jsquery can work upon it.*/
 	let startNend = /\[\"|\"\]/gi;
@@ -32,7 +32,7 @@ function html_to_string(text) {
 	try {
 		return $(result).text().trim();
 	} catch {
-		return result.replace(/\"/gi, "");
+		return result.replace(/^"|"$/gi, "");
 	}
 }
 
