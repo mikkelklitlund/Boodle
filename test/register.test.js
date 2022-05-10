@@ -1,7 +1,7 @@
 const {
 	discordIDValidator,
-	moodleTokenValidator,
-} = require("../validation/validation.js");
+	moodleTokenValidator
+} = require("../helpers/validation");
 
 test("Validates Discord ID", () => {
 	/* Checks if string lenght is between 17-19 -> return true */

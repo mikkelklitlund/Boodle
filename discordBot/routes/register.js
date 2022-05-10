@@ -4,12 +4,12 @@ const { body, validationResult } = require("express-validator");
 const {
 	createUser,
 	updateUser,
-	fetchUser,
+	fetchUser
 } = require("../../database/manageUserDB");
 const {
 	moodleTokenValidator,
-	discordIDValidator,
-} = require("../../validation/validation");
+	discordIDValidator
+} = require("../../helpers/validation");
 
 router.get("/:id/", async (req, res) => {
 	// Site generated from /setup command
@@ -18,7 +18,7 @@ router.get("/:id/", async (req, res) => {
 		return res.status("409").send("User already exists");
 	}
 	res.render("webpage.pug", {
-		id: Buffer.from(req.params.id, "base64").toString("utf-8"),
+		id: Buffer.from(req.params.id, "base64").toString("utf-8")
 	});
 });
 

@@ -4,10 +4,10 @@ const {
 	createUser,
 	fetchUser,
 	updateUser,
-	deleteUser,
+	deleteUser
 } = require("../database/manageUserDB");
 const profileModel = require("../database/profileSchema");
-const { decrypt } = require("../validation/cryptography");
+const { decrypt } = require("../helpers/cryptography");
 
 beforeAll(async () => await db.connect());
 afterEach(async () => await db.clearDatabase());
