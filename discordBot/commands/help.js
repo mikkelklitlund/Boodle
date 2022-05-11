@@ -10,9 +10,9 @@ module.exports = {
                 .setDescription('The command you want help with')
                 .setRequired(true)
                 .addChoice('courses', 'courses')
-                .addChoice('newcourses', 'newcourses')
                 .addChoice('nextcourse', 'nextcourse')
-                .addChoice('weekday', 'weekday')
+                .addChoice('user', 'user')
+                .addChoice('server', 'server')
                 .addChoice('setup', 'setup')),
     async execute(interaction) {
         const message = new MessageEmbed({
@@ -34,6 +34,7 @@ module.exports = {
                 break;
             case "Weekday":
                 message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material.";
+
                 break;
            
         }

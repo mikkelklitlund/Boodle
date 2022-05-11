@@ -1,3 +1,8 @@
+/**
+ * Validates a users discord id
+ * @param {string} discordId User's discord id
+ * @returns True if the format fits, false if it does not fit, null if it is not a string
+ */
 function discordIDValidator(discordId) {
 	// takes string as input, returns null if not a string, returns true if string contains only regex chars, false otherwise
 	if (typeof discordId === "string") {
@@ -7,6 +12,11 @@ function discordIDValidator(discordId) {
 	} else return null;
 }
 
+/**
+ * Validates a user's moodle token
+ * @param {string} moodleToken User's moodle token
+ * @returns True if the format fits, false if it does not fit, null if it is not a string
+ */
 function moodleTokenValidator(moodleToken) {
 	// Same as discordIdValidator, but for moodle token with another regex
 	if (typeof moodleToken === "string") {
