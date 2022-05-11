@@ -20,21 +20,23 @@ module.exports = {
             description: ``
         })
         switch (interaction.options.getString("command")) {
+            case "setup":
+                message.description = "Usage: /setup\nStarts the process of setting up the users data in the database.";
+                break;
             case "courses":
-                message.description = "Usage: /courses\nDisplays the next 3 courses of the user";
+                message.description = "Usage: /courses\nDisplays the next 3 courses of the user.";
                 break;
             case "nextcourse":
-                message.description = "Usage: /nextcourse\nDisplays the users next course";
+                message.description = "Usage: /nextcourse\nDisplays the users next course.";
                 break;
-            case "setup":
-                message.description = "Usage: /setup\nStarts the process of setting up the users data in the database";
+                case "newcourses":
+                message.description = "Usage: /newcourses\nAllows the user to decide how many courses they want to see.";
                 break;
             case "Weekday":
-                message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material ";
+                message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material.";
+
                 break;
-            case "User":
-            message.description = "Usage: /User\nGets the users info, such as discord id";
-                break;
+           
         }
         interaction.reply({ embeds: [message] });
 
