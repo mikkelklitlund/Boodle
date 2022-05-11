@@ -21,7 +21,7 @@ function html_to_string(text) {
   let newline = /<\/li>|<\/h[0-9]>|<br[^>]*>|<span[^>]*>/gi;
   let result = text.replace (newline, '\n');
 /* This removes the list start with an empty string, to remove it*/
-	let listRemove = /<li>|\\r|\\n|«[^]*»/gi;
+	let listRemove = /<li>|\\r|\\n|«[^»]*»/gi;
 
 	result = result.replace(listRemove, "");
 	/* This makes the a double newline just before a header.*/
