@@ -34,7 +34,6 @@ module.exports = {
                 break;
             case "Weekday":
                 message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material.";
-
                 break;
            
         }
