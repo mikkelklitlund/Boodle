@@ -39,6 +39,5 @@
     "mongodb-memory-server": "^8.1.4",
     "mongoose": "^6.2.8",
     "pug": "^3.0.2"
-  },
-  "devDependencies": {}
+  }
 }
