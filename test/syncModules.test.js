@@ -94,6 +94,66 @@ test("Should give the next module", () => {
 		}
 	];
 
+	const moduleListStopDate = [
+		{
+			events: [
+				{
+					courseName: "SLIAL",
+					courseID: "24300",
+					timeUNIX: "1762783400",
+					courseData: "blah blah blah"
+				},
+				{
+					courseName: "SLIAL",
+					courseID: "24300",
+					timeUNIX: "1762783400",
+					courseData: "blah blah blah"
+				},
+				{
+					courseName: "SLIAL",
+					courseID: "24300",
+					timeUNIX: "1752783400",
+					courseData: "blah blah blah"
+				},
+				{
+					courseName: "SLIAL",
+					courseID: "24300",
+					timeUNIX: "1762783400",
+					courseData: "blah blah blah"
+				}
+			]
+		},
+		{
+			events: [
+				{
+					courseName: "IWP",
+					courseID: "24300",
+					timeUNIX: "1642351400", //Setting this as stopDate
+					courseData: "blah blah blah"
+				},
+				{
+					courseName: "IWP",
+					courseID: "24300",
+					timeUNIX: "1642351400",
+					courseData: "blah blah blah"
+				},
+				{
+					courseName: "IWP",
+					courseID: "24300",
+					timeUNIX: "1752783400",
+					courseData: "blah blah blah"
+				},
+				{
+					courseName: "IWP",
+					courseID: "24300",
+					timeUNIX: "1762783400",
+					courseData: "blah blah blah"
+				}
+			]
+		}
+	];
+
 	expect(syncModules(moduleList1)).toEqual([2]);
 	expect(syncModules(moduleList2)).toEqual([0, 2]);
+	expect(syncModules(moduleListStopDate, "16/01/2022")).toEqual([0, 0]);
 });
