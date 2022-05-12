@@ -57,6 +57,7 @@ module.exports = {
 			.then(async (res) => {
 				if (!res) {
 					await interaction.editReply("No moodle token found");
+					return;
 				} else {
 					summary = await assembler(
 						res.moodle_token,
@@ -93,7 +94,7 @@ module.exports = {
 				});
 				bigField.pop();
 				let bigEmbed = new MessageEmbed({
-					title: res.length === 1 ? "Course" : "Courses",
+					title: res.length < 2 ? "Course" : "Courses",
 					url: "https://moodle.aau.dk/my/",
 					fields:
 						bigField.length == 0
