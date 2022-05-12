@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const { Client, Collection, Intents } = require("discord.js");
 
 //Setting up express
-require("./express");
+require("./server");
 
 // DB related modules
 const { connectDB } = require("../database/connectDB");
