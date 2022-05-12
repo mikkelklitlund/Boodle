@@ -1,7 +1,7 @@
 /**
  *
  * @param {object} moduleList Object with every module in a given course
- * @returns Array of numbers. One number per index for each course given in moduleList
+ * @returns {array} Array of numbers. One number per index for each course given in moduleList
  */
 function syncModules (moduleList) {
   let nextModules = [];

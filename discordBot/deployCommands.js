@@ -16,8 +16,7 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN);
 
-rest
-	.put(Routes.applicationCommands(process.env.CLIENT_ID, guildid), {
+rest.put(Routes.applicationCommands(process.env.CLIENT_ID, guildid), {
 		body: commands
 	})
 	.then(() => console.log("Successfully registered application commands."))
