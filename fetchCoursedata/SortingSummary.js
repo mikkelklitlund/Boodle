@@ -9,11 +9,9 @@ const $ = require("jquery")(window);
  */
 function html_to_string(text) {
 	if (typeof text !== "string") return false;
+	
 	/*the newline regex variable, basically makes sure that we replace all the html elemnts in line 10 with \n newline.
 	This also includes a newline underneeth a header. */
-
-	if (typeof text !== "string") return false;
-
 	let newline = /<\/li>|<\/h[0-9]>|<br[^>]*>|<span[^>]*>/gi;
 	let result = text.replace(newline, "\n");
 
