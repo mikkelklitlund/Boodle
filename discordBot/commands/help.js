@@ -26,16 +26,9 @@ module.exports = {
             case "courses":
                 message.description = "Usage: /courses\nDisplays the next 3 courses of the user.";
                 break;
-            case "nextcourse":
-                message.description = "Usage: /nextcourse\nDisplays the users next course.";
-                break;
-                case "newcourses":
-                message.description = "Usage: /newcourses\nAllows the user to decide how many courses they want to see.";
-                break;
             case "Weekday":
                 message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material.";
                 break;
-           
         }
         interaction.reply({ embeds: [message] });
 
