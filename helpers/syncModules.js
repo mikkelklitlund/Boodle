@@ -15,15 +15,12 @@ function syncModules(moduleList, stopDate) {
 		let count = 0;
 		// Iterates over the length of each course
 		for (let i = 1; i < moduleList[k].events.length; i++) {
-			// Iterates 2 times ( i-1, i) to append the date of previous module and the "current" module to an array
-			for (let j = i - 1; j < i; j++) {
-				let date = new Date(moduleList[k].events[j].timeUNIX * 1000);
-				let year = date.getFullYear();
-				let month = date.getMonth();
-				let day = date.getDate();
-				dateDifference[n] = day + " " + month + " " + year;
-				n++;
-			}
+			let date = new Date(moduleList[k].events[i - 1].timeUNIX * 1000);
+			let year = date.getFullYear();
+			let month = date.getMonth();
+			let day = date.getDate();
+			dateDifference[n] = day + " " + month + " " + year;
+			n++;
 
 			// If previous module and "current" module is NOT at the same date, as well as "current" module is not in the future
 			// count will be incremented
