@@ -2,6 +2,7 @@ const getUnixTime = require("date-fns/getUnixTime");
 /**
  *
  * @param {object} moduleList Object with every module in a given course
+ * @param {string} stopDate Optional. To get a specific date (dd/mm/yyyy)
  * @returns {array} Array of numbers. One number per index for each course given in moduleList
  */
 function syncModules(moduleList, stopDate) {
@@ -15,7 +16,7 @@ function syncModules(moduleList, stopDate) {
 		// Iterates over the length of each course
 		for (let i = 1; i < moduleList[k].events.length; i++) {
 			// Iterates 2 times ( i-1, i) to append the date of previous module and the "current" module to an array
-			for (let j = i - 1; j < i + 1; j++) {
+			for (let j = i - 1; j < i; j++) {
 				let date = new Date(moduleList[k].events[j].timeUNIX * 1000);
 				let year = date.getFullYear();
 				let month = date.getMonth();
