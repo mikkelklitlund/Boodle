@@ -76,21 +76,32 @@ module.exports = {
 			.then(async (res) => {
 				let bigField = [];
 				let nextModule = syncModules(summary);
+				let summaryCounter = 0;
 				res.forEach((element, i) => {
 					let field = new customEmbedField(
 						element.instanceName,
-						html_to_string(JSON.stringify(element.description)),
+						html_to_string(element.description),
 						element.location,
 						element.time,
 						element.fullname,
 						element.url,
 						html_to_string(
-							JSON.stringify(summary[i].events[nextModule[i]].courseData)
+							JSON.stringify(
+								summary[summaryCounter].events[nextModule[summaryCounter]]
+									.courseData
+							)
 						)
 					).fieldEmbedifier();
 					let tempArr = [];
 					tempArr[i] = field;
 					bigField = bigField.concat(tempArr[i]);
+					if (
+						typeof res[i + 1] == "undefined" ||
+						res[i].fullname !== res[i + 1].fullname
+					) {
+						//Need to check whether it is a "double course/module" or not
+						summaryCounter++;
+					}
 				});
 				bigField.pop();
 				let bigEmbed = new MessageEmbed({
