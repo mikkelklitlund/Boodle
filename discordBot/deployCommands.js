@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 //* Remember to run this file after creating a new slash command
 const fs = require("node:fs");
 const { REST } = require("@discordjs/rest");
@@ -16,7 +16,8 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN);
 
-rest.put(Routes.applicationCommands(process.env.CLIENT_ID, guildid), {
+res
+	.put(Routes.applicationCommands(process.env.CLIENT_ID, guildid), {
 		body: commands
 	})
 	.then(() => console.log("Successfully registered application commands."))
