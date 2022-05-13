@@ -26,6 +26,7 @@ module.exports = {
 							if (res.data.errorcode) {
 								//If moodle couldn't find any data related to the token
 								await interaction.editReply(res.data.message);
+								return;
 							} else {
 								const message = new MessageEmbed({
 									title: "Comming courses:",
@@ -51,6 +52,7 @@ module.exports = {
 								});
 								//Edit reply to contain coursedata
 								await interaction.editReply({ embeds: [message] });
+								return;
 							}
 						});
 				} else {
@@ -59,12 +61,14 @@ module.exports = {
 						content:
 							"No user found in database, you'll need to set your moodle token first, use: /setup"
 					});
+					return;
 				}
 			})
 			.catch(async (err) => {
 				//If fetchUser fails
 				console.log(err);
 				await interaction.reply({ content: "Error occured" });
+				return;
 			});
 	}
 };
