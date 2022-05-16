@@ -10,9 +10,6 @@ module.exports = {
                 .setDescription('The command you want help with')
                 .setRequired(true)
                 .addChoice('courses', 'courses')
-                .addChoice('nextcourse', 'nextcourse')
-                .addChoice('user', 'user')
-                .addChoice('server', 'server')
                 .addChoice('weekday', 'weekday')
                 .addChoice('setup', 'setup')),
     async execute(interaction) {
@@ -21,20 +18,14 @@ module.exports = {
             description: ``
         })
         switch (interaction.options.getString("command")) {
-            case "courses":
-                message.description = "Usage: /courses\nDisplays the next 3 courses of the user";
-                break;
-            case "nextcourse":
-                message.description = "Usage: /nextcourse\nDisplays the users next course";
-                break;
             case "setup":
-                message.description = "Usage: /setup\nStarts the process of setting up the users data in the database";
+                message.description = "Usage: /setup\nStarts the process of setting up the users data in the database.";
                 break;
-            case "weekday":
-                message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material ";
+            case "courses":
+                message.description = "Usage: /courses\nDisplays the next 3 courses of the user.";
                 break;
-            case "user":
-            message.description = "Usage: /User\nGets the users info, such as discord id";
+            case "Weekday":
+                message.description = "Usage: /weekday\nAllows the user to decide for which day they want the course material.";
                 break;
         }
         interaction.reply({ embeds: [message] });

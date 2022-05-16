@@ -1,12 +1,17 @@
 const fetch = require("node-fetch");
 
-// let ListOfIds = [];
-let day = "";
-let month = "";
-let year = "";
-
+/**
+ *
+ * @param {string} token Moodle ws token
+ * @param {string} day The day
+ * @param {string} month The month
+ * @param {string} year The year
+ * @returns {array} Array of course id
+ */
 async function GetCourseIds(token, day, month, year) {
 	let tempArr = [];
+	if (day[0] == 0) day = day.substring(1);
+	if (month[0] == 0) month = month.substring(1);
 	const json = await fetch(
 		"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
 			token +
@@ -25,7 +30,12 @@ async function GetCourseIds(token, day, month, year) {
 	// return ListOfIds;
 	return tempArr;
 }
-
+/**
+ *
+ * @param {string} id The Moodle course id
+ * @param {string} token The Moodle ws token
+ * @returns {object} JSON object containing course contents
+ */
 async function fetch_data(id, token) {
 	let json = await fetch(
 		"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
@@ -37,6 +47,12 @@ async function fetch_data(id, token) {
 	return json;
 }
 
+/**
+ *
+ * @param {string} token The Moodle ws token
+ * @param {string} Id The Moodle course
+ * @returns {array} Array of objects containing name, courseid and timestart
+ */
 async function course_module_event(token, Id) {
 	let eventsList = [];
 	const json = await fetch(
@@ -48,6 +64,7 @@ async function course_module_event(token, Id) {
 	).then((req) => req.json());
 	//Endnu et forloop her, iterere over json.events
 	let summary = await fetch_data(Id, token);
+	let previousModule = 0;
 
 	for (let j = 0; j < json.events.length; j++) {
 		let obj =
@@ -64,8 +81,6 @@ async function course_module_event(token, Id) {
 		let day = date.getDate();
 		let currentModule = day + " " + month + " " + year;
 
-		let previousModule = 0;
-
 		if (j !== 0) {
 			let date = new Date(json.events[j - 1].timestart * 1000);
 			let year = date.getFullYear();
@@ -74,16 +89,18 @@ async function course_module_event(token, Id) {
 			previousModule = day + " " + month + " " + year;
 		}
 
-		if (typeof summary[j] == "undefined" || summary[j].summary == false) {
+		if (typeof summary[j] == "undefined") {
 			obj += '", "courseData": [' + '"N/A"' + "]}";
 		} else if (
 			previousModule !== currentModule &&
-			summary[j].summary !== false
+			summary[j + 1].summary !== false
 		) {
-			obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
-		} else {
 			obj +=
-				'", "courseData": [' + JSON.stringify(summary[j - 1].summary) + "]}";
+				'", "courseData": [' + JSON.stringify(summary[j + 1].summary) + "]}";
+		} else if (summary[j].summary == false) {
+			obj += '", "courseData": [' + '"N/A"' + "]}";
+		} else {
+			obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
 		}
 		eventsList.push(obj);
 	}
@@ -91,6 +108,14 @@ async function course_module_event(token, Id) {
 	return eventsList;
 }
 
+/**
+ *
+ * @param {string} token The Moodle ws token
+ * @param {string} day The day to be searched
+ * @param {string} month The month to be searched
+ * @param {string} year The year to be searched
+ * @returns {array} Array with each index representing
+ */
 async function assembler(token, day, month, year) {
 	let idList = await GetCourseIds(token, day, month, year);
 

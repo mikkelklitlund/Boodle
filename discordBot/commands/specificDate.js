@@ -1,8 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const {
-	calendarDayView,
-	getNextWday,
-	datePToObj
+	calendarDayView
 } = require("../../fetchCoursedata/calendarGetDayView.js");
 const { fetchUser } = require("../../database/manageUserDB.js");
 const { MessageEmbed } = require("discord.js");
@@ -10,47 +8,35 @@ const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
 const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
 const { syncModules } = require("../../helpers/syncModules");
 const { customEmbedField } = require("../../helpers/customEmbedField");
+const { validateDate } = require("../../helpers/validation");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("weekday")
-		.setDescription("Prints schedule for a given weekday")
+		.setName("show")
+		.setDescription("Prints schedule for a given date")
 		.addStringOption((option) =>
 			option
-				.setName("weekday")
-				.setDescription("Prints schedule for next monday.")
+				.setName("date")
+				.setDescription("Prints schedule for a specific date (dd/mm/yyyy).")
 				.setRequired(true)
-				.addChoice("monday", "monday")
-				.addChoice("tuesday", "tuesday")
-				.addChoice("wednesday", "wednesday")
-				.addChoice("thursday", "thursday")
-				.addChoice("friday", "friday")
 		),
 
 	async execute(interaction) {
 		await interaction.deferReply();
-		let dateOBJ;
 
-		switch (interaction.options.data[0].value) {
-			case "monday":
-				dateOBJ = datePToObj(getNextWday("Monday"));
-				break;
-			case "tuesday":
-				dateOBJ = datePToObj(getNextWday("Tuesday"));
-				break;
-			case "wednesday":
-				dateOBJ = datePToObj(getNextWday("Wednesday"));
-				break;
-			case "thursday":
-				dateOBJ = datePToObj(getNextWday("Thursday"));
-				break;
-			case "friday":
-				dateOBJ = datePToObj(getNextWday("Friday"));
-				break;
-			default:
-				await interaction.editReply("please input a weekday");
-				break;
+		//Validate date
+		if (!validateDate(interaction.options.data[0].value)) {
+			await interaction.editReply(
+				"Date is not valid! Remember format: dd/mm/yyyy"
+			);
+			return;
 		}
+
+		let dateOBJ = {
+			day: interaction.options.data[0].value.slice(0, 2),
+			month: interaction.options.data[0].value.slice(3, 5),
+			year: interaction.options.data[0].value.slice(6, 10)
+		};
 
 		let summary;
 		await fetchUser(interaction.user.id)
@@ -75,12 +61,15 @@ module.exports = {
 			})
 			.then(async (res) => {
 				let bigField = [];
-				let nextModule = syncModules(summary);
+				let nextModule = syncModules(
+					summary,
+					interaction.options.data[0].value
+				);
 				let summaryCounter = 0;
 				res.forEach((element, i) => {
 					let field = new customEmbedField(
 						element.instanceName,
-						html_to_string(element.description),
+						html_to_string(JSON.stringify(element.description)),
 						element.location,
 						element.time,
 						element.fullname,

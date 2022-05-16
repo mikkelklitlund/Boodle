@@ -1,9 +1,8 @@
-require("dotenv").config();
 const profileModel = require("./profileSchema");
 const { encrypt, decrypt } = require("../helpers/cryptography");
 
-//Checks if user exists in database, returns info if found and null if not found
 /**
+ * Checks if user exists in database, returns info if found and null if not found
  * @typedef profile
  * @property {string} discord_id The Discord user id
  * @property {string} moodle_token The Discord user Moodle token
@@ -19,9 +18,8 @@ async function fetchUser(disc_id) {
 	return profile;
 }
 
-//Create a new user (document) in database
 /**
- *
+ *Create a new user (document) in database
  * @param {string} disc_id The Discord user id
  * @param {string} moodle_token The Discord user Moodle token
  * @returns Nothing, but results in creation of a user instance in DB if such a user does not exist
@@ -40,9 +38,8 @@ async function createUser(disc_id, moodle_token) {
 	await newUser.save();
 }
 
-//Updating a user's moodle token
 /**
- *
+ * Updating a user's moodle token
  * @param {string} disc_id The Discord user id
  * @param {string} moodle_token The Discord user Moodle token
  * @returns Nothing, but results in update of user if such a user exists
@@ -58,9 +55,8 @@ async function updateUser(disc_id, moodle_token) {
 	await profileData.save();
 }
 
-//Deleting user (deleting a document)
 /**
- *
+ * Deleting user (deleting a document)
  * @param {string} disc_id The discord user id
  * @returns Nothing, but deletes user if such a user exists
  */
@@ -70,7 +66,7 @@ async function deleteUser(disc_id) {
 	if (!profileData) {
 		throw TypeError("User doesn't exist!");
 	}
-	//Delete user
+
 	await profileData.deleteOne({ discord_id: disc_id });
 }
 
