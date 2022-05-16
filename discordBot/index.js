@@ -23,7 +23,7 @@ connectDB();
 
 // let moodleToken;
 //explicitly added hostname
-const hostname = "127.0.0.1";
+const hostName = "127.0.0.1";
 // Arbitrary port, should be between 3090-3099
 const port = 3090;
 // Initialization of Express
@@ -34,7 +34,7 @@ app.set("views", path.join(process.cwd(), "../website/resources"));
 app.set("view engine", "pug");
 
 // Creates HTTP server
-const server = http.createServer(app).listen(port, hostname, () => {
+const server = http.createServer(app).listen(port, hostName, () => {
   console.log(`Server Running at http://165.22.18.133/`);
 });
 
