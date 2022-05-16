@@ -89,9 +89,11 @@ function calendarDayViewOBJFilter(resOBJ) {
  * calendarDayView('123',20,4,2022)
  */
 async function calendarDayView(moodleToken, day, month, year) {
+	if (day[0] == 0) day = day.substring(1);
+	if (month[0] == 0) month = month.substring(1);
 	let requestURL = `${server}wstoken=${moodleToken}&wsfunction=core_calendar_get_calendar_day_view&day=${day}&month=${month}&year=${year}&moodlewsrestformat=json`;
 	// Response obejct can be found at https://www.moodle.aau.dk/user/managetoken.php -> Moodle mobile web service documentation -> core_calendar_get_calendar_day_view
-	console.log(requestURL);
+	// console.log(requestURL);
 	let data = await fetch(requestURL)
 		.then(async (req) => await req.json())
 		.then((json) => {

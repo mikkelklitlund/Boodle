@@ -10,9 +10,7 @@ module.exports = {
                 .setDescription('The command you want help with')
                 .setRequired(true)
                 .addChoice('courses', 'courses')
-                .addChoice('nextcourse', 'nextcourse')
-                .addChoice('user', 'user')
-                .addChoice('server', 'server')
+                .addChoice('weekday', 'weekday')
                 .addChoice('setup', 'setup')),
     async execute(interaction) {
         const message = new MessageEmbed({
@@ -26,16 +24,9 @@ module.exports = {
             case "courses":
                 message.description = "Usage: /courses\nDisplays the next 3 courses of the user.";
                 break;
-            case "nextcourse":
-                message.description = "Usage: /nextcourse\nDisplays the users next course.";
-                break;
-                case "newcourses":
-                message.description = "Usage: /newcourses\nAllows the user to decide how many courses they want to see.";
-                break;
             case "Weekday":
-                message.description = "Usage: /Weekday\nAllows the user to decide for which day they want the course material.";
+                message.description = "Usage: /weekday\nAllows the user to decide for which day they want the course material.";
                 break;
-           
         }
         interaction.reply({ embeds: [message] });
 

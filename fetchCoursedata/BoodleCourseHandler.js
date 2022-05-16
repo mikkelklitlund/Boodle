@@ -10,6 +10,8 @@ const fetch = require("node-fetch");
  */
 async function GetCourseIds(token, day, month, year) {
 	let tempArr = [];
+	if (day[0] == 0) day = day.substring(1);
+	if (month[0] == 0) month = month.substring(1);
 	const json = await fetch(
 		"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
 			token +
@@ -62,6 +64,7 @@ async function course_module_event(token, Id) {
 	).then((req) => req.json());
 	//Endnu et forloop her, iterere over json.events
 	let summary = await fetch_data(Id, token);
+	let previousModule = 0;
 
 	for (let j = 0; j < json.events.length; j++) {
 		let obj =
@@ -78,8 +81,6 @@ async function course_module_event(token, Id) {
 		let day = date.getDate();
 		let currentModule = day + " " + month + " " + year;
 
-		let previousModule = 0;
-
 		if (j !== 0) {
 			let date = new Date(json.events[j - 1].timestart * 1000);
 			let year = date.getFullYear();
@@ -88,16 +89,18 @@ async function course_module_event(token, Id) {
 			previousModule = day + " " + month + " " + year;
 		}
 
-		if (typeof summary[j] == "undefined" || summary[j].summary == false) {
+		if (typeof summary[j] == "undefined") {
 			obj += '", "courseData": [' + '"N/A"' + "]}";
 		} else if (
 			previousModule !== currentModule &&
-			summary[j].summary !== false
+			summary[j + 1].summary !== false
 		) {
-			obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
-		} else {
 			obj +=
-				'", "courseData": [' + JSON.stringify(summary[j - 1].summary) + "]}";
+				'", "courseData": [' + JSON.stringify(summary[j + 1].summary) + "]}";
+		} else if (summary[j].summary == false) {
+			obj += '", "courseData": [' + '"N/A"' + "]}";
+		} else {
+			obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
 		}
 		eventsList.push(obj);
 	}
