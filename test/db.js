@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
-let mongo
+let mongo;
 
 
 //Connect to the in-memory database
