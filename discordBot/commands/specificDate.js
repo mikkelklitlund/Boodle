@@ -5,7 +5,7 @@ const {
 const { fetchUser } = require("../../database/manageUserDB.js");
 const { MessageEmbed } = require("discord.js");
 const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
-const { html_to_string } = require("../../fetchCoursedata/SortingSummary");
+const { htmlToString } = require("../../fetchCoursedata/SortingSummary");
 const { syncModules } = require("../../helpers/syncModules");
 const { customEmbedField } = require("../../helpers/customEmbedField");
 const { validateDate } = require("../../helpers/validation");
@@ -69,12 +69,12 @@ module.exports = {
 				res.forEach((element, i) => {
 					let field = new customEmbedField(
 						element.instanceName,
-						html_to_string(JSON.stringify(element.description)),
+						htmlToString(JSON.stringify(element.description)),
 						element.location,
 						element.time,
 						element.fullname,
 						element.url,
-						html_to_string(
+						htmlToString(
 							JSON.stringify(
 								summary[summaryCounter].events[nextModule[summaryCounter]]
 									.courseData
@@ -86,7 +86,7 @@ module.exports = {
 					bigField = bigField.concat(tempArr[i]);
 					if (
 						typeof res[i + 1] == "undefined" ||
-						res[i].fullname !== res[i + 1].fullname
+						res[i].fullName !== res[i + 1].fullName
 					) {
 						//Need to check whether it is a "double course/module" or not
 						summaryCounter++;
