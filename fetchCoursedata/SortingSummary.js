@@ -1,6 +1,6 @@
 const { JSDOM } = require("jsdom");
 const { window } = new JSDOM("");
-const $ = require("jquery")(window); 
+const $ = require("jquery")(window);
 
 /**
  *
@@ -9,14 +9,14 @@ const $ = require("jquery")(window);
  */
 function htmlToString(text) {
 	if (typeof text !== "string") return false;
-	
+
 	/*the newline regex variable, basically makes sure that we replace all the html elemnts in line 10 with \n newline.
 	This also includes a newline underneeth a header. */
 	let newLine = /<\/li>|<\/h[0-9]>|<br[^>]*>|<span[^>]*>/gi;
 	let result = text.replace(newLine, "\n");
 
 	/* This removes the list start with an empty string, to remove it*/
-	let listRemove = /<li>|\\r|\\n|«[^]*»/gi;
+	let listRemove = /<li>|\\r|\\n|«[^»]*»/gi;
 	result = result.replace(listRemove, "");
 
 	/* This makes the a double newline just before a header.*/
