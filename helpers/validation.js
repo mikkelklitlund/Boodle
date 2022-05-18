@@ -27,6 +27,7 @@ function moodleTokenValidator(moodleToken) {
 }
 
 function validateDate(date) {
+	if (typeof date !== "string" || date.length != 10) return false;
 	const day = parseInt(date.slice(0, 2));
 	const month = parseInt(date.slice(3, 5));
 	const year = parseInt(date.slice(6, 10));
