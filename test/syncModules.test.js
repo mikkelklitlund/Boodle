@@ -100,7 +100,7 @@ test("Should give the next module", () => {
 				{
 					courseName: "SLIAL",
 					courseID: "24300",
-					timeUNIX: "1762783400",
+					timeUNIX: "1742783400",
 					courseData: "blah blah blah"
 				},
 				{
@@ -112,13 +112,13 @@ test("Should give the next module", () => {
 				{
 					courseName: "SLIAL",
 					courseID: "24300",
-					timeUNIX: "1752783400",
+					timeUNIX: "1762783400",
 					courseData: "blah blah blah"
 				},
 				{
 					courseName: "SLIAL",
 					courseID: "24300",
-					timeUNIX: "1762783400",
+					timeUNIX: "1772783400",
 					courseData: "blah blah blah"
 				}
 			]
@@ -128,7 +128,7 @@ test("Should give the next module", () => {
 				{
 					courseName: "IWP",
 					courseID: "24300",
-					timeUNIX: "1642351400", //Setting this as stopDate
+					timeUNIX: "1642351400", //Setting this as stopDate in test 1
 					courseData: "blah blah blah"
 				},
 				{
@@ -156,4 +156,5 @@ test("Should give the next module", () => {
 	expect(syncModules(moduleList1)).toEqual([2]);
 	expect(syncModules(moduleList2)).toEqual([0, 2]);
 	expect(syncModules(moduleListStopDate, "16/01/2022")).toEqual([0, 0]);
+	expect(syncModules(moduleListStopDate, "17/07/2025")).toEqual([1, 2]);
 });
