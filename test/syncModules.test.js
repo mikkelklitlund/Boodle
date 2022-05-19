@@ -140,7 +140,7 @@ test("Should give the next module", () => {
 				{
 					courseName: "IWP",
 					courseID: "24300",
-					timeUNIX: "1752783400",
+					timeUNIX: "1752783400", //Setting this as stopDate in test 2
 					courseData: "blah blah blah"
 				},
 				{
