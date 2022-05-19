@@ -25,7 +25,11 @@ function moodleTokenValidator (moodleToken) {
     else return false;
   } else return null;
 }
-
+/**
+ * 
+ * @param {string} date date as a string with length 10.
+ * @returns {boolean} true or false depending if its a valid date.
+ */
 function validateDate (date) {
   if (typeof date !== 'string' || date.length != 10) return false;
   const day = parseInt (date.slice (0, 2));
@@ -34,7 +38,7 @@ function validateDate (date) {
 
   return correctDate (day, month, year);
 }
-
+/* Makes sure that it is the correct day, also accounts for leap years.*/
 function correctDate (day, month, year) {
   if (month < 1 || month > 12) return false;
   if (day < 1 || day > 31) return false;
@@ -42,7 +46,7 @@ function correctDate (day, month, year) {
   if (month == 2) {
     if (checkLeap (year)) {
       if (day > 29) return false;
-    } else if (day >= 28) return false;
+    } else if (day > 28) return false;
   }
 
   if (month == 4 || month == 6 || month == 9 || month == 11) {
