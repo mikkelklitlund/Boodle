@@ -42,7 +42,7 @@ function correctDate (day, month, year) {
   if (month == 2) {
     if (checkLeap (year)) {
       if (day > 29) return false;
-    } else if (day >= 28) return false;
+    } else if (day > 28) return false;
   }
 
   if (month == 4 || month == 6 || month == 9 || month == 11) {
