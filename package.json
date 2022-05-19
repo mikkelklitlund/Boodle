@@ -4,7 +4,7 @@
   "description": "P2 Project",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles --coverage",
+    "test": "jest --runInBand --coverage",
     "start": "cd discordBot && node index.js"
   },
   "jest": {
