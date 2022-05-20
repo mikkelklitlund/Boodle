@@ -29,8 +29,8 @@ class customEmbedField {
 		this.description = description || "No description available";
 		this.time = time || { timeStart: 0, timeDuration: 1 };
 		this.courseName = courseName || "Course";
-		this.url = url || "";
-		this.location = location || "";
+		this.url = url || "https://moodle.aau.dk/my";
+		this.location = location || "N/A";
 		this.summary = summary || "N/A";
 	}
 	// Method that generates array of objects using this instance values

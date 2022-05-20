@@ -93,21 +93,38 @@ module.exports = {
 					}
 				});
 				bigField.pop();
-				let bigEmbed = new MessageEmbed({
-					title: res.length < 2 ? "Course" : "Courses",
-					url: "https://moodle.aau.dk/my/",
-					fields:
-						bigField.length == 0
-							? [
-									{
-										name: "No courses",
-										value: `No courses found at ${interaction.options.data[0].value}`,
-										inline: false
-									}
-							  ]
-							: bigField
-				});
-				await interaction.editReply({ embeds: [bigEmbed] });
+
+				if (JSON.stringify(bigField).length < 5500) {
+					let bigEmbed = new MessageEmbed({
+						title: res.length < 2 ? "Course" : "Courses",
+						url: "https://moodle.aau.dk/my/",
+						fields:
+							bigField.length == 0
+								? [
+										{
+											name: "No courses",
+											value: `No courses found at ${interaction.options.data[0].value}`,
+											inline: false
+										}
+								  ]
+								: bigField
+					});
+					await interaction.editReply({ embeds: [bigEmbed] });
+				} else {
+					let messageEmbedArr = [];
+					let offset = 0;
+					for (
+						let i = 0;
+						i < Math.floor(JSON.stringify(bigField).length / 5500) + 1;
+						i++
+					) {
+						while (JSON.stringify(messageEmbedArr[i]) < 5500) {
+							messageEmbedArr[i] += 
+						}
+						
+						messageEmbedArr[i] = new MessageEmbed();
+					}
+				}
 			})
 			.catch((err) => console.error(err));
 	}

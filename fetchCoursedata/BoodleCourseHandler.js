@@ -55,6 +55,7 @@ async function fetchData(id, token) {
  */
 async function courseModuleEvent(token, Id) {
 	let eventsList = [];
+	let nextSummary = 1; //Is 1 to skip the first 'intro' section
 	const json = await fetch(
 		"https://www.moodle.aau.dk/webservice/rest/server.php?wstoken=" +
 			token +
@@ -89,21 +90,24 @@ async function courseModuleEvent(token, Id) {
 			previousModule = day + " " + month + " " + year;
 		}
 
-		if (
-			typeof summary[j] == "undefined" ||
-			typeof summary[j + 1] == "undefined"
-		) {
+		if (typeof summary[nextSummary] == "undefined") {
 			obj += '", "courseData": [' + '"N/A"' + "]}";
 		} else if (
 			previousModule !== currentModule &&
-			summary[j + 1].summary !== false
+			summary[nextSummary].summary !== false
 		) {
 			obj +=
-				'", "courseData": [' + JSON.stringify(summary[j + 1].summary) + "]}";
-		} else if (summary[j].summary == false) {
+				'", "courseData": [' +
+				JSON.stringify(summary[nextSummary].summary) +
+				"]}";
+			nextSummary++;
+		} else if (summary[nextSummary].summary == false) {
 			obj += '", "courseData": [' + '"N/A"' + "]}";
 		} else {
-			obj += '", "courseData": [' + JSON.stringify(summary[j].summary) + "]}";
+			obj +=
+				'", "courseData": [' +
+				JSON.stringify(summary[nextSummary - 1].summary) +
+				"]}";
 		}
 		eventsList.push(obj);
 	}
