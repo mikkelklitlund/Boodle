@@ -7,7 +7,7 @@ const { MessageEmbed } = require("discord.js");
 const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
 const { htmlToString } = require("../../fetchCoursedata/SortingSummary");
 const { syncModules } = require("../../helpers/syncModules");
-const { customEmbedField } = require("../../helpers/customEmbedField");
+const { customEmbedField, embedMitosis } = require("../../helpers/customEmbedField");
 const { validateDate } = require("../../helpers/validation");
 
 module.exports = {
@@ -111,19 +111,46 @@ module.exports = {
 					});
 					await interaction.editReply({ embeds: [bigEmbed] });
 				} else {
-					let messageEmbedArr = [];
-					let offset = 0;
-					for (
-						let i = 0;
-						i < Math.floor(JSON.stringify(bigField).length / 5500) + 1;
-						i++
-					) {
-						while (JSON.stringify(messageEmbedArr[i]) < 5500) {
-							messageEmbedArr[i] += 
-						}
+					let temparr = embedMitosis(bigField);
+					temparr[0].push({name: 'Message too long',value:'Message too long',inline:false})
+					let bigEmbed = new MessageEmbed({
+						title: res.length < 2 ? "Course" : "Courses",
+						url: "https://moodle.aau.dk/my/",
+						fields:
+							temparr[0].length == 0
+								? [
+										{
+											name: "No courses",
+											value: `No courses found at ${interaction.options.data[0].value}`,
+											inline: false
+										}
+								  ]
+								: temparr[0]
+					});
+					await interaction.editReply({embeds: [bigEmbed]})
+					// let messageEmbedArr = [];
+					// let offset = 0;
+					// for (
+					// 	let i = 0;
+					// 	i < Math.floor(JSON.stringify(bigField).length / 5500) + 1;
+					// 	i++
+					// ) {
+					// 	let arrLen = 0;
+					// 	let j = 0;
+					// 	let k = 0;
+					// 	let tempArr = [];
+					// 	while (1) {
+					// 		if (arrLen > 5499) {
+					// 			for (k; k<j; k++) {
+					// 				tempArr.push(bigField)
+					// 			}
+					// 		}
+					// 		arrLen += JSON.stringify(bigField[j]).length;
+					// 		j++;
+					// 	}
 						
-						messageEmbedArr[i] = new MessageEmbed();
-					}
+					// 	messageEmbedArr[i] = new MessageEmbed();
+					// }
 				}
 			})
 			.catch((err) => console.error(err));
