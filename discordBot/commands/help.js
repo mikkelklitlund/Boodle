@@ -11,7 +11,8 @@ module.exports = {
                 .setRequired(true)
                 .addChoice('courses', 'courses')
                 .addChoice('weekday', 'weekday')
-                .addChoice('setup', 'setup')),
+                .addChoice('setup', 'setup')
+                .addChoice('specificDate', 'show')),
     async execute(interaction) {
         const message = new MessageEmbed({
             title: `/` + (interaction.options.getString("command")),
@@ -26,6 +27,9 @@ module.exports = {
                 break;
             case "Weekday":
                 message.description = "Usage: /weekday\nAllows the user to decide for which day they want the course material.";
+                break;
+            case "show":
+                message.description = "Usage: /show\nAllows the user to get the course information for a specific date\n input date in format dd/mm/yyyy or dd-mm-yyyy.";
                 break;
         }
         interaction.reply({ embeds: [message] });
