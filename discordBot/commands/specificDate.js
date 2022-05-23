@@ -7,7 +7,10 @@ const { MessageEmbed } = require("discord.js");
 const { assembler } = require("../../fetchCoursedata/BoodleCourseHandler.js");
 const { htmlToString } = require("../../fetchCoursedata/SortingSummary");
 const { syncModules } = require("../../helpers/syncModules");
-const { customEmbedField } = require("../../helpers/customEmbedField");
+const {
+	customEmbedField,
+	embedMitosis
+} = require("../../helpers/customEmbedField");
 const { validateDate } = require("../../helpers/validation");
 
 module.exports = {
@@ -70,7 +73,7 @@ module.exports = {
 					let field = new customEmbedField(
 						element.instanceName,
 						htmlToString(JSON.stringify(element.description)),
-						element.location,
+						htmlToString(JSON.stringify(element.location)),
 						element.time,
 						element.fullname,
 						element.url,
@@ -93,21 +96,46 @@ module.exports = {
 					}
 				});
 				bigField.pop();
-				let bigEmbed = new MessageEmbed({
-					title: res.length < 2 ? "Course" : "Courses",
-					url: "https://moodle.aau.dk/my/",
-					fields:
-						bigField.length == 0
-							? [
-									{
-										name: "No courses",
-										value: `No courses found at ${interaction.options.data[0].value}`,
-										inline: false
-									}
-							  ]
-							: bigField
-				});
-				await interaction.editReply({ embeds: [bigEmbed] });
+
+				if (JSON.stringify(bigField).length < 5500) {
+					let bigEmbed = new MessageEmbed({
+						title: res.length < 2 ? "Course" : "Courses",
+						url: "https://moodle.aau.dk/my/",
+						fields:
+							bigField.length == 0
+								? [
+										{
+											name: "No courses",
+											value: `No courses found at ${interaction.options.data[0].value}`,
+											inline: false
+										}
+								  ]
+								: bigField
+					});
+					await interaction.editReply({ embeds: [bigEmbed] });
+				} else {
+					let temparr = embedMitosis(bigField);
+					temparr[0].push({
+						name: "Message too long",
+						value: "Message too long",
+						inline: false
+					});
+					let bigEmbed = new MessageEmbed({
+						title: res.length < 2 ? "Course" : "Courses",
+						url: "https://moodle.aau.dk/my/",
+						fields:
+							temparr[0].length == 0
+								? [
+										{
+											name: "No courses",
+											value: `No courses found at ${interaction.options.data[0].value}`,
+											inline: false
+										}
+								  ]
+								: temparr[0]
+					});
+					await interaction.editReply({ embeds: [bigEmbed] });
+				}
 			})
 			.catch((err) => console.error(err));
 	}

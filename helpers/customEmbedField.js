@@ -29,8 +29,8 @@ class customEmbedField {
 		this.description = description || "No description available";
 		this.time = time || { timeStart: 0, timeDuration: 1 };
 		this.courseName = courseName || "Course";
-		this.url = url || "";
-		this.location = location || "";
+		this.url = url || "https://moodle.aau.dk/my";
+		this.location = location || "N/A";
 		this.summary = summary || "N/A";
 	}
 	// Method that generates array of objects using this instance values
@@ -58,13 +58,13 @@ class customEmbedField {
 
 		let res = [
 			{
-				name: this.courseName,
-				value: this.title,
+				name: this.courseName || 'N/A',
+				value: this.title || 'N/A',
 				inline: false
 			},
 			{
 				name: "Location",
-				value: this.location,
+				value: this.location || 'N/A',
 				inline: true
 			},
 			{
@@ -85,6 +85,24 @@ class customEmbedField {
 		res = res.concat(summarySplit, emptyLine);
 		return res;
 	}
-}
-
-module.exports = { customEmbedField };
+};
+	
+function embedMitosis(bigField) {
+	let tempArr = [];
+		if (JSON.stringify(bigField).length > 5500) {
+			let j = 0;
+			for (let i = 0; i < bigField.length; i++) {
+				
+				tempArr[i] = new Array();
+				do {
+					tempArr[i].push(bigField[j]);
+					j++;
+					// console.log(j + ' hej');
+					// console.log('LÆNGDE '+tempArr[i].toString().length)
+				} while (JSON.stringify(tempArr).length < 5499) 
+				tempArr[i].pop;
+			}
+		}
+		return tempArr;
+	}
+	module.exports = { customEmbedField, embedMitosis };
