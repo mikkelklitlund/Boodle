@@ -1,6 +1,7 @@
 const http = require("http");
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 
 const registerRoute = require("./routes/register.js");
 const aboutRoute = require("./routes/about.js");
