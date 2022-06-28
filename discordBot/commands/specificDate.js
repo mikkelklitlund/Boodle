@@ -75,7 +75,7 @@ module.exports = {
 						htmlToString(JSON.stringify(element.description)),
 						htmlToString(JSON.stringify(element.location)),
 						element.time,
-						element.fullname,
+						element.fullName,
 						element.url,
 						htmlToString(
 							JSON.stringify(
